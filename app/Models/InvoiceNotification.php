@@ -39,7 +39,7 @@ class InvoiceNotification extends Model
 
         $access_token = json_decode($result)->access_token;
 
-        if($data['email2'] != null){
+        if($data['customer_email2'] != null){
             $emails = array(
                 [
                     "customer"  => $data['customer'],
