@@ -12,6 +12,7 @@ class Customer extends Model
         'name',
         'company',
         'email',
+        'email2',
         'status',
         'cep',
         'address',

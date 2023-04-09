@@ -19,10 +19,17 @@
 
     <div class="col-xs-6 col-md-6">
       <div class="form-group">
-        <label for="email" class="col-form-label">E-mail de Acesso (<span class="text-danger">*</span>):</label>
-        <input type="email" id="email" name="email" class="form-control" placeholder="E-mail de Acesso" value="{{isset($result->email) ? $result->email : ''}}" required>
+        <label for="email" class="col-form-label">E-mail (<span class="text-danger">*</span>):</label>
+        <input type="email" id="email" name="email" class="form-control" placeholder="E-mail" value="{{isset($result->email) ? $result->email : ''}}" required>
       </div><!-- form-group -->
     </div><!-- col -->
+
+    <div class="col-xs-6 col-md-6">
+        <div class="form-group">
+          <label for="email2" class="col-form-label">E-mail 2</label>
+          <input type="email" id="email2" name="email2" class="form-control" placeholder="E-mail2" value="{{isset($result->email2) ? $result->email2 : ''}}">
+        </div><!-- form-group -->
+      </div><!-- col -->
 
     <div class="col-xs-6 col-md-6">
       <div class="form-group">
