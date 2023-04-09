@@ -78,11 +78,7 @@ class CustomerController extends Controller
         return view($this->datarequest['diretorio'] . '.index', compact('results', 'order'))->with($this->datarequest);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         return view($this->datarequest['diretorio'] . '.form')->with($this->datarequest);
@@ -97,7 +93,7 @@ class CustomerController extends Controller
         $rules = [
             'name'          => "required",
             'document'      => "required",
-            'email'         => "required|unique:customers",
+            'email'         => "required",
             'company'       => "required",
             // 'cep'           => "required",
             // 'address'       => "required",
@@ -273,7 +269,7 @@ class CustomerController extends Controller
         $rules = [
             'name'          => "required",
             'document'      => "required",
-            'email'         => "required|unique:customers,email,$id,id",
+            'email'         => "required",
             'company'       => "required",
             // 'cep'           => "required",
             // 'address'       => "required",

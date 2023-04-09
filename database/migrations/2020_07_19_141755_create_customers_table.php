@@ -18,7 +18,7 @@ class CreateCustomersTable extends Migration
             $table->string('name');
             $table->string('document');
             $table->string('company');
-            $table->string('email')->unique();
+            $table->string('email');
             $table->enum('status', ['cancelado','ativo','pendente',]);
             $table->string('cep')->nullable();
             $table->string('address')->nullable();
