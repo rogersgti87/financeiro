@@ -65,9 +65,7 @@ class InvoiceNotification extends Model
                     "name"  => "Financeiro",
                     "email" => $config->smtp_user
                 ],
-                "to" => [
-                    $emails
-                ]
+                "to" => $emails
             ],
           ]);
 
