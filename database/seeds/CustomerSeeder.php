@@ -25,8 +25,8 @@ class CustomerSeeder extends Seeder
             'complement' => '',
             'city' => 'Cabo Frio',
             'state' => 'RJ',
-            'phone' => '(22) 9.8828-0129',
-            'payment_method' => 'pix',
+            'phone' => '22988280129',
+            'payment_method' => 'Pix',
             'created_at' => \Carbon\Carbon::now(),
             'updated_at' => \Carbon\Carbon::now(),
         ]);
