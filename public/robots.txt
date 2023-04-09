@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+Disallow: 
+/admin
+/admin/*
+/fatura
+/fatura/*
+
+Sitemap: https://innsystem.com.br/sitemap.xml
