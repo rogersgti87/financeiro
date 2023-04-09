@@ -26,7 +26,7 @@ class AddEmail2ToCustomersTable extends Migration
     public function down()
     {
         Schema::table('customers', function (Blueprint $table) {
-            $table->dropColumn('email2');
+            $table->dropColumn('email2')->nullable();
         });
     }
 }

@@ -51,10 +51,12 @@ class InvoiceNotification extends Model
                 ]
                 );
         } else {
-            $emails = [
+            $emails = array(
+                [
                 "customer"  => $data['customer'],
                 "email"     => $data['customer_email']
-            ];
+            ]
+        );
         }
 
         $response = Http::withToken($access_token)->post(env('API_HOST_SEND_PULSE').'/smtp/emails',[
