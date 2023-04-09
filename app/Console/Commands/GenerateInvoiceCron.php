@@ -26,7 +26,7 @@ class GenerateInvoiceCron extends Command
   {
 
 
-    $sql = "SELECT a.id, c.name customer,c.email,c.phone, c.company, CONCAT(s.name, ' - ',a.dominio,' (de: ',DATE_FORMAT(CONCAT(YEAR(CURRENT_DATE),'-',MONTH(CURRENT_DATE),'-',DAY(a.date_end)), '%d/%m/%Y'),' até ',
+    $sql = "SELECT a.id, c.name customer,c.email,c.email2,c.phone, c.company, CONCAT(s.name, ' - ',a.dominio,' (de: ',DATE_FORMAT(CONCAT(YEAR(CURRENT_DATE),'-',MONTH(CURRENT_DATE),'-',DAY(a.date_end)), '%d/%m/%Y'),' até ',
     DATE_FORMAT(DATE_ADD(CONCAT(YEAR(CURRENT_DATE),'-',MONTH(CURRENT_DATE),'-',DAY(a.date_end)), INTERVAL 1 MONTH),'%d/%m/%Y'), ') - R$ ',a.price) description,
     CONCAT(s.name, ' - ',a.dominio) description_whatsapp,
     a.dominio,a.price,c.payment_method,a.period, CURRENT_DATE date_invoice,
@@ -116,6 +116,7 @@ class GenerateInvoiceCron extends Command
             'title'                     => 'Nova fatura gerada',
             'customer'                  => $invoice->customer,
             'customer_email'            => $invoice->email,
+            'customer_email2'           => $invoice->email2,
             'customer_phone'            => $invoice->phone,
             'company'                   => $invoice->company,
             'data_fatura'               => date('d/m/Y', strtotime($invoice->date_invoice)),

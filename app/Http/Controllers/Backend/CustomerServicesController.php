@@ -65,7 +65,7 @@ class CustomerServicesController extends Controller
       }
 
       $results = DB::table('customerservices')
-        ->select('id', 'name', 'company', 'email', 'status', 'phone', 'created_at')
+        ->select('id', 'name', 'company', 'email','email2', 'status', 'phone', 'created_at')
         ->orderByRaw("$column_name")
         ->whereraw("$field $operador $newValue")
         ->paginate(30);
@@ -214,6 +214,7 @@ class CustomerServicesController extends Controller
             'title'                     => 'Nova fatura gerada',
             'customer'                  => $getCustomer->name,
             'customer_email'            => $getCustomer->email,
+            'customer_email2'           => $getCustomer->email2,
             'customer_phone'            => $getCustomer->phone,
             'company'                   => $getCustomer->company,
             'data_fatura'               => date('d/m/Y', strtotime($invoice->date_invoice)),

@@ -105,7 +105,7 @@ class InvoicesController extends Controller
 
     $cs  = DB::table('customer_services as cs')
             ->select('cs.id','cs.dominio','s.name','cs.period','c.name as customer_name',
-            'c.email','c.phone','c.company')
+            'c.email','c.email2','c.phone','c.company')
             ->join('services as s','cs.service_id','s.id')
             ->join('customers as c','cs.customer_id','c.id')
             ->where('cs.id',$result['customer_service_id'])
@@ -194,6 +194,7 @@ class InvoicesController extends Controller
             'title'                     => 'Nova fatura gerada',
             'customer'                  => $cs->customer_name,
             'customer_email'            => $cs->email,
+            'customer_email2'           => $cs->email2,
             'customer_phone'            => $cs->phone,
             'company'                   => $cs->company,
             'data_fatura'               => date('d/m/Y', strtotime($invoice->date_invoice)),
@@ -319,7 +320,7 @@ class InvoicesController extends Controller
     try {
 
         $invoice = DB::table('invoices as i')
-                ->select('i.id','i.date_invoice','i.date_end','i.description','c.email','c.name','c.company','c.document','c.phone','c.address','c.number','c.complement',
+                ->select('i.id','i.date_invoice','i.date_end','i.description','c.email','c.email2','c.name','c.company','c.document','c.phone','c.address','c.number','c.complement',
                 'c.district','c.city','c.state','c.cep','c.payment_method','s.id as service_id','s.name as service_name','s.price as service_price')
                 ->join('customer_services as cs','i.customer_service_id','cs.id')
                 ->join('customers as c','cs.customer_id','c.id')
@@ -332,6 +333,9 @@ class InvoicesController extends Controller
 
         $details = [
             'title'                     => 'Confirmação de Pagamento',
+            'customer_email'            => $invoice->email,
+            'customer_email2'           => $invoice->email2,
+            'phone'                     => $invoice->phone,
             'customer'                  => $invoice->name,
             'company'                   => $invoice->company,
             'data_fatura'               => date('d/m/Y', strtotime($invoice->date_invoice)),

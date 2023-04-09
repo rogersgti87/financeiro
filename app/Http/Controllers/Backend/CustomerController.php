@@ -63,6 +63,7 @@ class CustomerController extends Controller
                     'customers.name',
                     'customers.company',
                     'customers.email',
+                    'customers.email2',
                     'customers.phone',
                     'customers.status as status',
                     'customers.created_at',
@@ -128,6 +129,7 @@ class CustomerController extends Controller
         $model->company         = $result['company'];
         $model->document        = $result['document'];
         $model->email           = $result['email'];
+        $model->email2          = $result['email2'];
         $model->status          = $result['status'];
         $model->cep             = $result['cep'];
         $model->address         = $result['address'];
@@ -302,6 +304,7 @@ class CustomerController extends Controller
         $model->document        = $result['document'];
         $model->company         = $result['company'];
         $model->email           = $result['email'];
+        $model->email2          = $result['email2'];
         if (isset($result['status'])) {
             $model->status      = $result['status'];
         } else {

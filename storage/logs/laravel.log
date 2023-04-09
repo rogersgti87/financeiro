@@ -519,3 +519,27 @@
 #43 C:\\laragon\\www\\cobranca\\public\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
 #44 {main}
 "} 
+[2023-04-09 19:57:13] local.ERROR: syntax error, unexpected token "," {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): syntax error, unexpected token \",\" at C:\\laragon\\www\\financeiro\\app\\Models\\InvoiceNotification.php:46)
+[stacktrace]
+#0 {main}
+"} 
+[2023-04-09 19:57:29] local.ERROR: syntax error, unexpected token "," {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): syntax error, unexpected token \",\" at C:\\laragon\\www\\financeiro\\app\\Models\\InvoiceNotification.php:46)
+[stacktrace]
+#0 {main}
+"} 
+[2023-04-09 19:57:42] local.ERROR: syntax error, unexpected token "}" {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): syntax error, unexpected token \"}\" at C:\\laragon\\www\\financeiro\\app\\Models\\InvoiceNotification.php:52)
+[stacktrace]
+#0 {main}
+"} 
+[2023-04-09 19:58:00] local.ERROR: syntax error, unexpected token "}" {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): syntax error, unexpected token \"}\" at C:\\laragon\\www\\financeiro\\app\\Models\\InvoiceNotification.php:53)
+[stacktrace]
+#0 {main}
+"} 
+[2023-04-09 19:58:13] local.ERROR: syntax error, unexpected token "}" {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): syntax error, unexpected token \"}\" at C:\\laragon\\www\\financeiro\\app\\Models\\InvoiceNotification.php:58)
+[stacktrace]
+#0 {main}
+"} 
+[2023-04-09 19:58:14] local.ERROR: syntax error, unexpected token "}" {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): syntax error, unexpected token \"}\" at C:\\laragon\\www\\financeiro\\app\\Models\\InvoiceNotification.php:58)
+[stacktrace]
+#0 {main}
+"} 

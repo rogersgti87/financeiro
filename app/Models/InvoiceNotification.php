@@ -39,6 +39,24 @@ class InvoiceNotification extends Model
 
         $access_token = json_decode($result)->access_token;
 
+        if($data['email2'] != null){
+            $emails = array(
+                [
+                    "customer"  => $data['customer'],
+                    "email"     => $data['customer_email']
+                ],
+                [
+                    "customer"  => $data['customer'],
+                    "email"     => $data['customer_email2']
+                ]
+                );
+        } else {
+            $emails = [
+                "customer"  => $data['customer'],
+                "email"     => $data['customer_email']
+            ];
+        }
+
         $response = Http::withToken($access_token)->post(env('API_HOST_SEND_PULSE').'/smtp/emails',[
             "email" =>  [
                 "subject"  => $data['title'],
@@ -48,10 +66,7 @@ class InvoiceNotification extends Model
                     "email" => $config->smtp_user
                 ],
                 "to" => [
-                    [
-                    "customer"  =>$data['customer'],
-                    "email" => $data['customer_email']
-                    ]
+                    $emails
                 ]
             ],
           ]);
@@ -90,6 +105,7 @@ class InvoiceNotification extends Model
             $data['text_whatsapp'] .= "Código digitavel do boleto \n\n";
         }
 
+        if($data['customer_phone'] != null){
 
         $response = Http::withHeaders([
             "Content-Type"  => "application/json",
@@ -98,7 +114,6 @@ class InvoiceNotification extends Model
             "DeviceToken"   =>  $config->api_brasil_device_token
         ])->withToken($config->api_brasil_bearer_token)
         ->post($config->api_brasil_host.'/whatsapp/sendText',[
-            //"number" => '5522999921543',
             "number" => '55'.$data['customer_phone'],
             "text"   => $data['text_whatsapp']
         ]);
@@ -113,19 +128,21 @@ class InvoiceNotification extends Model
             $data['text_whatsapp_payment'] .= "$whats_billet_digitable_line\n\n";
         }
 
-        $response = Http::withHeaders([
-            "Content-Type"  => "application/json",
-            "SecretKey"     =>  $config->api_brasil_secret_key,
-            "PublicToken"   =>  $config->api_brasil_public_token,
-            "DeviceToken"   =>  $config->api_brasil_device_token
-        ])->withToken($config->api_brasil_bearer_token)
-        ->post($config->api_brasil_host.'/whatsapp/sendText',[
-            //"number" => '5522999921543',
-            "number" => '55'.$data['customer_phone'],
-            "text"   => $data['text_whatsapp_payment']
-        ]);
 
-        $result = $response->getBody();
+            $response = Http::withHeaders([
+                "Content-Type"  => "application/json",
+                "SecretKey"     =>  $config->api_brasil_secret_key,
+                "PublicToken"   =>  $config->api_brasil_public_token,
+                "DeviceToken"   =>  $config->api_brasil_device_token
+            ])->withToken($config->api_brasil_bearer_token)
+            ->post($config->api_brasil_host.'/whatsapp/sendText',[
+                "number" => '55'.$data['customer_phone'],
+                "text"   => $data['text_whatsapp_payment']
+            ]);
+
+            $result = $response->getBody();
+        }
+
 
         DB::table('invoice_notifications')->insert([
             'invoice_id'        => $data['invoice_id'],
