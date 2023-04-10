@@ -45,7 +45,7 @@ class GenerateInvoiceCron extends Command
          WHEN a.period = 'anual'      THEN DATE_ADD(CONCAT(YEAR(CURRENT_DATE),'-',MONTH(CURRENT_DATE),'-',DAY(a.date_end)), INTERVAL 12 MONTH)
     END  = b.date_end
     )
-    AND a.date_end - CURRENT_DATE = 10 AND a.status = 'ATIVO'";
+    AND CURRENT_DATE = DATE_ADD(DATE_ADD(CONCAT(YEAR(CURRENT_DATE),'-',MONTH(CURRENT_DATE),'-',DAY(a.date_end)), INTERVAL 1 MONTH), INTERVAL -10 DAY) AND a.status = 'ATIVO'";
 
    $verifyInvoices = DB::select($sql);
 
