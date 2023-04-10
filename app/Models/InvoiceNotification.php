@@ -86,8 +86,18 @@ class InvoiceNotification extends Model
         $whats_billet_digitable_line    = $data['billet_digitable_line'];
         $whats_billet_url_slip          = $data['billet_url_slip'];
 
+        if(isset($data['text_remember']) && $data['text_remember'] != null){
+            $whats_text_remember        = $data['text_remember'];
+        }
+
+
         $data['text_whatsapp'] = "Olá $whats_customer_name, tudo bem?\n\n";
-        $data['text_whatsapp'] .= "Esta é uma mensagem para notificá-lo(a) que foi gerado a *Fatura #$whats_invoice_id* \n\n";
+
+        if(isset($data['text_remember']) && $data['text_remember'] != null){
+            $data['text_whatsapp'] .= "$whats_text_remember *Fatura #$whats_invoice_id* \n\n";
+        }else{
+            $data['text_whatsapp'] .= "Esta é uma mensagem para notificá-lo(a) que foi gerado a *Fatura #$whats_invoice_id* \n\n";
+        }
         $data['text_whatsapp'] .= "*Serviço(s) Contratado(s):* \n\n";
         $data['text_whatsapp'] .= "$whats_description \n\n";
         $data['text_whatsapp'] .= "*Data da Fatura:* $whats_data_fatura \n";

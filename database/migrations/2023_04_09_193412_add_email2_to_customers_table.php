@@ -14,7 +14,7 @@ class AddEmail2ToCustomersTable extends Migration
     public function up()
     {
         Schema::table('customers', function (Blueprint $table) {
-            $table->string('email2')->after('email');
+            $table->string('email2')->nullable()->after('email');
         });
     }
 
@@ -26,7 +26,7 @@ class AddEmail2ToCustomersTable extends Migration
     public function down()
     {
         Schema::table('customers', function (Blueprint $table) {
-            $table->dropColumn('email2')->nullable();
+            $table->dropColumn('email2');
         });
     }
 }
