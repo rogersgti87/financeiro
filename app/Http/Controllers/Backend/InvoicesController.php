@@ -80,6 +80,7 @@ class InvoicesController extends Controller
                                 ->join('services as s','cs.service_id','s.id')
                                 ->where('cs.customer_id',$customer_id)
                                 ->get();
+
     return view('backend.customers.invoicesForm', compact('customer_id','customer_services'))->with($this->datarequest);
   }
 
@@ -250,7 +251,14 @@ class InvoicesController extends Controller
   public function edit($customer_id, $id)
   {
     $result = $this->model::where('id', $id)->first();
-    return view('backend.customers.invoicesForm', compact('result', 'customer_id'))->with($this->datarequest);
+
+    $customer_services  = DB::table('customer_services as cs')
+                                ->select('cs.id',DB::raw("CONCAT(s.name,' - ',cs.dominio) as service_name"))
+                                ->join('services as s','cs.service_id','s.id')
+                                ->where('cs.customer_id',$customer_id)
+                                ->get();
+
+    return view('backend.customers.invoicesForm', compact('result', 'customer_id','customer_services'))->with($this->datarequest);
   }
 
 
@@ -269,7 +277,7 @@ class InvoicesController extends Controller
       return response()->json($validator->errors()->first(), 422);
     }
 
-
+    $model->customer_service_id = $result['customer_service_id'];
     $model->status          = $result['status'];
     $model->payment_method  = $result['payment_method'];
     $model->date_end        = Carbon::createFromFormat('d/m/Y',$result['date_end'])->format('Y-m-d');
