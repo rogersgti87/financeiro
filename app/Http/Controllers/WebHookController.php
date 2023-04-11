@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Config;
+use App\Models\Invoice;
 use App\Models\InvoiceNotification;
 use Illuminate\Support\Facades\Http;
 use DB;
@@ -44,7 +45,40 @@ class WebHookController extends Controller
   {
     $data = $request->all();
 
-    \Log::info(json_encode($data));
+    $api_token  = env('API_TOKEN_PAG_HIPER');
+    $api_key    = env('API_KEY_PAG_HIPER');
+
+
+    $response = Http::withHeaders([
+        'accept' => 'application/json',
+        'content-type' => 'application/json',
+    ])->post('https://pix.paghiper.com/invoice/notification/',[
+        'token'             => $api_token,
+        'apiKey'            => $data['apiKey'],
+        'transaction_id'    => $data['transaction_id'],
+        'notification_id'   => $data['notification_id']
+    ]);
+
+    $result = $response->getBody();
+
+    $result = json_decode($result)->status_request;
+
+
+    if($result->status == 'completed' || $result->status == 'paid'){
+        Invoice::where('id',$data['order_id'])->where('transaction_id',$data['transaction_id'])->update([
+            'status'       =>   'pago',
+            'date_payment' =>   Carbon::now(),
+            'updated_at'   =>   Carbon::now()
+        ]);
+    }else if($result->status == 'canceled' || $result->status == 'refunded'){
+        Invoice::where('id',$data['order_id'])->where('transaction_id',$data['transaction_id'])->update([
+            'status'       =>   'cancelado',
+            'date_payment' =>   Carbon::now(),
+            'updated_at'   =>   Carbon::now()
+        ]);
+    }
+
+
   }
 
 
