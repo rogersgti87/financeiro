@@ -123,12 +123,9 @@ class InvoiceNotification extends Model
 
 
 
-        if($whats_payment_method == 'Pix'){
-            $data['text_whatsapp'] .= "Código digitavel pix\n (Atenção: verifique se está copiando o código do PIX todo.) \n\n";
-        }else{
+        if($whats_payment_method == 'Boleto'){
             $data['text_whatsapp'] .= "Para abrir o Boleto é só clicar no link abaixo\n";
             $data['text_whatsapp'] .= "$whats_billet_url_slip\n\n";
-            $data['text_whatsapp'] .= "Código digitavel do boleto \n (Atenção: verifique se está copiando o código do boleto todo.) \n";
         }
 
         if($data['customer_phone'] != null){
@@ -175,6 +172,7 @@ class InvoiceNotification extends Model
         if($whats_payment_method == 'Pix'){
             $data['text_whatsapp_payment'] .= "$whats_pix_emv\n\n";
         }else{
+            $whats_billet_digitable_line = removeEspeciais($whats_billet_digitable_line);
             $data['text_whatsapp_payment'] .= "$whats_billet_digitable_line\n\n";
         }
 

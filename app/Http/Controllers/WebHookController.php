@@ -48,11 +48,18 @@ class WebHookController extends Controller
     $api_token  = env('API_TOKEN_PAG_HIPER');
     $api_key    = env('API_KEY_PAG_HIPER');
 
+    $invoice = Invoice::where('transaction_id',$result->transaction_id)->first();
+
+    if($invoice->payment_method == 'Pix'){
+        $url = 'https://pix.paghiper.com/invoice/notification/';
+    }else{
+        $url = 'https://api.paghiper.com/transaction/notification/';
+    }
 
     $response = Http::withHeaders([
         'accept' => 'application/json',
         'content-type' => 'application/json',
-    ])->post('https://pix.paghiper.com/invoice/notification/',[
+    ])->post($url,[
         'token'             => $api_token,
         'apiKey'            => $data['apiKey'],
         'transaction_id'    => $data['transaction_id'],

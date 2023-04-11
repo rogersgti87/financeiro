@@ -35,10 +35,22 @@ table.dataTable td {
                     </td>
                     <td>{{ $notification->type_send == 'whatsapp' ? $notification->subject_whatsapp : $notification->subject }}</td>
                     <td>{{ \Carbon\Carbon::parse($notification->timestamp)->format('d/m/Y') }}</td>
-                    <td>{{ $notification->event }}</td>
+                    <td>
+                        @if($notification->event == 'delivered')
+                            Entregue
+                        @elseif($notification->event == 'opened')
+                            Abriu
+                        @elseif($notification->event == 'clicked')
+                            Clicou
+                        @else
+                            {{$notification->event}}
+                        @endif
+                    </td>
                     <td>{{ $notification->recipient}}</td>
                     <td>
-                        @if ($notification->status == "Success")
+                        @if ($notification->type_send == 'whatsapp' && $notification->status == "Success")
+                            <span class="badge badge-success">Enviado</span>
+                        @elseif ($notification->type_send == 'email' && ($notification->event == "opened" || $notification->event == "clicked" || $notification->event == "delivered"))
                             <span class="badge badge-success">Enviado</span>
                         @else
                             <span class="badge badge-danger">Erro</span>
