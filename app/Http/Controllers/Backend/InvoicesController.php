@@ -325,6 +325,14 @@ class InvoicesController extends Controller
     try {
       foreach ($data['selectedInvoices'] as $result) {
         $find = $model->find($result);
+        $notifications = InvoiceNotification::where('invoice_id',$find->id)->first();
+
+        if($notifications != null && $notifications->senpulse_email_id != null){
+            DB::table('email_events')->where('message_id',$notifications->senpulse_email_id)->delete();
+            $notifications->delete();
+        }
+
+
         $find->delete();
       }
     } catch (\Exception $e) {
