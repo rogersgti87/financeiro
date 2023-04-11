@@ -33,8 +33,7 @@ table.dataTable td {
                             <span class="badge badge-info"><i class="fa fa-envelope"></i></span>
                         @endif
                     </td>
-                    <td>{{ $notification->subject }}</td>
-                    {{-- <td>{{ $notification->type_send == 'whatsapp' ? $notification->subject_whatsapp : $notification->subject }}</td> --}}
+                    <td>{{ $notification->type_send == 'whatsapp' ? $notification->subject_whatsapp : $notification->subject }}</td>
                     <td>{{ \Carbon\Carbon::parse($notification->timestamp)->format('d/m/Y') }}</td>
                     <td>
                         @if($notification->event == 'delivered')
