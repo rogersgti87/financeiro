@@ -84,6 +84,21 @@ class InvoicesController extends Controller
     return view('backend.customers.invoicesForm', compact('customer_id','customer_services'))->with($this->datarequest);
   }
 
+  public function notification($invoice_id)
+  {
+
+    $notifications = DB::table('invoice_notifications as a')
+                        ->select('a.invoice_id', 'ev.timestamp', 'a.senpulse_email_id', 'ev.event','a.subject_whatsapp',
+                         'ev.recipient', 'ev.subject', 'a.type_send','a.status','a.message_status','a.message')
+                        ->leftJoin('email_events as ev','ev.message_id','a.senpulse_email_id')
+                        ->where('a.invoice_id',$invoice_id)
+                        ->orderby('a.id','desc')
+                        ->get();
+
+
+    return view('backend.customers.invoicesNotification', compact('notifications'))->with($this->datarequest);
+  }
+
 
   public function store()
   {
@@ -329,7 +344,7 @@ class InvoicesController extends Controller
 
         $invoice = DB::table('invoices as i')
                 ->select('i.id','i.date_invoice','i.date_end','i.description','c.email','c.email2','c.name','c.company','c.document','c.phone','c.address','c.number','c.complement',
-                'c.district','c.city','c.state','c.cep','c.payment_method','s.id as service_id','s.name as service_name','s.price as service_price')
+                'c.district','c.city','c.state','c.cep','c.payment_method','s.id as service_id','s.name as service_name','i.price as service_price','cs.dominio')
                 ->join('customer_services as cs','i.customer_service_id','cs.id')
                 ->join('customers as c','cs.customer_id','c.id')
                 ->join('services as s','cs.service_id','s.id')
@@ -338,13 +353,12 @@ class InvoicesController extends Controller
 
         $msg_success = ' e E-mail encaminhado para o Cliente';
 
-
-        $details = [
+         $details = [
             'title'                     => 'Confirmação de Pagamento',
+            'customer'                  => $invoice->name,
             'customer_email'            => $invoice->email,
             'customer_email2'           => $invoice->email2,
-            'phone'                     => $invoice->phone,
-            'customer'                  => $invoice->name,
+            'customer_phone'            => $invoice->phone,
             'company'                   => $invoice->company,
             'data_fatura'               => date('d/m/Y', strtotime($invoice->date_invoice)),
             'data_vencimento'           => date('d/m/Y', strtotime($invoice->date_end)),
@@ -352,12 +366,18 @@ class InvoicesController extends Controller
             'price'                     => number_format($invoice->service_price, 2),
             'payment_method'            => $invoice->payment_method,
             'description'               => $invoice->description,
+            'description_whatsapp'      => $invoice->service_name . ' - ' . $invoice->dominio,
             'invoice_id'                => $invoice->id,
             'status_payment'            => 'Pago',
             'url_base'                  => url('/')
         ];
 
-        \Mail::to($invoice->email)->send(new \App\Mail\InvoicePay($details));
+
+        $details['body']  = view('mails.payinvoice',$details)->render();
+
+        InvoiceNotification::sendNotificationConfirm($details);
+
+//        \Mail::to($invoice->email)->send(new \App\Mail\InvoicePay($details));
 
 
     } catch (\Exception $e) {

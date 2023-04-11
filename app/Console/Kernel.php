@@ -14,7 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         commands\GenerateInvoiceCron::class,
-        commands\VerifyInvoiceStatusCron::class,
+        //commands\VerifyInvoiceStatusCron::class,
         commands\RememberInvoiceCron::class,
     ];
 

@@ -111,6 +111,15 @@
                                                                             data-toggle="tooltip" data-placement="bottom"
                                                                             title="Ver/Editar"><i
                                                                                 class="fa fa-book"></i></a>
+                                                                        <a href="#" id="button-notification-invoice"
+                                                                            data-id="{{ $myInvoice->id }}"
+                                                                            data-type="edit"
+                                                                            data-customer_id="{{ $result->id }}"
+                                                                            data-status-invoice="{{$myInvoice->status}}"
+                                                                            class="btn btn-xs btn-warning"
+                                                                            data-toggle="tooltip" data-placement="bottom"
+                                                                            title="Notificações">
+                                                                            <i class="fa fa-bell-o" aria-hidden="true"></i></a>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -166,6 +175,29 @@
                                     </div>
                                     <!-- Modal :: Form MyInvoice -->
 
+                                      <!-- Modal :: Form Notification -->
+                                      <div class="modal fade" id="modalNotificationInvoice" tabindex="-1" role="dialog"
+                                      aria-labelledby="modalmyNotificationLabel" aria-hidden="true">
+                                      <div class="modal-dialog modal-lg">
+                                          <div class="modal-content">
+                                              <form action="" class="form-horizontal" id="form-request-notification-invoice">
+                                                  <div class="modal-header">
+                                                      <h5 class="modal-title" id="modalmyInvoicesLabel">Notificações</h5>
+                                                      <button type="button" class="close" data-dismiss="modal"
+                                                          aria-label="Close">
+                                                          <span aria-hidden="true">&times;</span>
+                                                      </button>
+                                                  </div>
+                                                  <div class="modal-body" id="form-content-notification-invoice">
+                                                      <!-- conteudo -->
+                                                      <!-- conteudo -->
+                                                  </div><!-- modal-body -->
+                                              </form>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <!-- Modal :: Form MyInvoice -->
+
                                     <!-- conteudo -->
                                 </div><!-- tab-pane -->
                                 <!-- end :: Tabe - Myinvoices -->
@@ -183,6 +215,7 @@
 
 @section('cssPage')
     <link rel="stylesheet" href="{{ asset('/general/plugins/sweetalert/sweetalert2.min.css') }}">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
 @endsection
 
 @section('jsPage')
@@ -195,6 +228,8 @@
     </script>
 
     <script src="{{ asset('/general/plugins/sweetalert/sweetalert2.min.js') }}"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+
 
     <script>
         // Open Modal - Create - Invoices
@@ -307,6 +342,27 @@
 
                 });
         });
+
+
+
+         // Open Modal - Notification - Invoice
+         $(document).on("click", "#button-notification-invoice", function() {
+            var invoice_id = $(this).data('id');
+            $("#form-content-notification-invoice").html('');
+            $("#modalNotificationInvoice").modal('show');
+            var url = `{{ url('/invoices-notification/${invoice_id}') }}`;
+            console.log(url);
+            $.get(url,
+                $(this)
+                .addClass('modal-scrollfix')
+                .find('#form-content-notification-invoice')
+                .html('Carregando...'),
+                function(data) {
+                    // console.log(data);
+                    $("#form-content-notification-invoice").html(data);
+                });
+        });
+
 
 
         // Button Save Forms - Create and Edit - Invoices
@@ -427,4 +483,7 @@
 
         });
     </script>
+
+
+
 @endsection

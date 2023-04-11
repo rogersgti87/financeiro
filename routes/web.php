@@ -14,6 +14,7 @@ use App\Http\Controllers\Backend\ConfigController;
 
 Route::prefix('webhook')->group(function () {
     Route::post('sendpulse-smtp', [WebHookController::class,'index']);
+    Route::post('paghiper', [WebHookController::class,'paghiper']);
 });
 
 /************************/
@@ -49,6 +50,7 @@ Route::middleware('auth')->group(function () {
   //Customer Invoices
   Route::get('/invoices', [InvoicesController::class,'index'])->name('backend.invoices');
   Route::get('/invoices-create/{customer_id}', [InvoicesController::class,'create'])->name('backend.invoices.create');
+  Route::get('/invoices-notification/{invoice_id}', [InvoicesController::class,'notification'])->name('backend.invoices.notification');
   Route::post('/invoices-store', [InvoicesController::class,'store'])->name('backend.invoices.store');
   Route::get('/invoices-edit/{customer_id}/{id}', [InvoicesController::class,'edit'])->name('backend.invoices.edit');
   Route::put('/invoices-update/{id}', [InvoicesController::class,'update'])->name('backend.invoices.update');

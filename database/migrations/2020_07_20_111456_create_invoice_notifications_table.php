@@ -16,12 +16,13 @@ class CreateInvoiceNotificationsTable extends Migration
         Schema::create('invoice_notifications', function (Blueprint $table) {
             $table->id('id');
             $table->integer('invoice_id');
+            $table->string('subject_whatsapp')->nullable();
             $table->string('type_send');
             $table->date('date');
             $table->string('senpulse_email_id')->nullable();
             $table->string('status')->nullable();
-            $table->integer('open')->nullable();
-            $table->integer('click')->nullable();
+            $table->text('message_status')->nullable();
+            $table->text('message')->nullable();
             $table->timestamps();
         });
     }

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>{{$details['title']}}</title>
+    <title>{{$title}}</title>
     <style>
         table {
             border: 1px solid #DDD;
@@ -30,19 +30,20 @@
 </head>
 
 <body>
-    <h1>{{$details['title']}}</h1>
-    <p>Olá {{$details['customer']}}, tudo bem?</p>
-    <p>Este é a confirmação e recibo do pagamento da <b>Fatura #{{$details['invoice_id']}}</b>.</p>
+    <h1>{{$title}}</h1>
+    <p>Olá {{$customer}}, tudo bem?</p>
+    <p>Este é a confirmação e recibo do pagamento da <b>Fatura #{{$invoice_id}}</b>.</p>
 
     <p><b>Serviço(s) Contratado(s):</b></p>
     <ul>
-        <li>{{$details['description']}}</li>
+        <li>{{$description}}</li>
     </ul>
 
     <p>----------------------------------------- </p>
-    <p><b>Data de Pagamento:</b> {{$details['data_pagamento']}} <br>
-        <b>Valor Pago:</b> R$ {{$details['price']}} <br>
-        <b>Situação:</b> {{$details['status_payment']}}</p>
+    <p><b>Data de Pagamento:</b> {{$data_pagamento}} <br>
+        <b>Valor Pago:</b> R$ {{$price}} <br>
+        <b>Forma de pagamento:</b> {{$payment_method}} <br>
+        <b>Situação:</b> {{$status_payment}}</p>
 
     <p><b>Observação:</b> Este e-mail servirá como recibo para este pagamento.</p>
     <p>Qualquer dúvida estamos à disposição. <br>

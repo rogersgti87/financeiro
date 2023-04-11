@@ -24,7 +24,7 @@ class RememberInvoiceCron extends Command
   {
 
     $sql = "SELECT i.id,i.date_invoice,i.date_end,i.description,CONCAT(s.name, ' - ',cs.dominio) description_whatsapp,c.email,c.email2,c.phone,c.name,c.company,c.document,c.phone,c.address,c.number,c.complement,
-    c.district,c.city,c.state,c.cep,c.payment_method,s.id AS service_id,s.name AS service_name,s.price AS service_price FROM invoices i
+    c.district,c.city,c.state,c.cep,c.payment_method,s.id AS service_id,s.name AS service_name,i.price AS service_price FROM invoices i
         INNER JOIN customer_services cs ON i.customer_service_id = cs.id
         INNER JOIN customers c ON  cs.customer_id = c.id
         INNER JOIN services  s ON  cs.service_id  = s.id

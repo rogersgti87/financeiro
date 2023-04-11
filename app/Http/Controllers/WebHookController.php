@@ -22,8 +22,6 @@ class WebHookController extends Controller
 
   public function index(Request $request)
   {
-
-
     $data = $request->all();
     if($data != null){
         foreach($data as $result){
@@ -41,5 +39,13 @@ class WebHookController extends Controller
     }
 
   }
+
+  public function paghiper(Request $request)
+  {
+    $data = $request->all();
+
+    \Log::info(json_encode($data));
+  }
+
 
 }
