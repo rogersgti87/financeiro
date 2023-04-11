@@ -65,13 +65,13 @@ class WebHookController extends Controller
 
 
     if($result->status == 'completed' || $result->status == 'paid'){
-        Invoice::where('id',$data['order_id'])->where('transaction_id',$data['transaction_id'])->update([
+        Invoice::where('id',$result->order_id)->where('transaction_id',$result->transaction_id)->update([
             'status'       =>   'pago',
             'date_payment' =>   Carbon::now(),
             'updated_at'   =>   Carbon::now()
         ]);
     }else if($result->status == 'canceled' || $result->status == 'refunded'){
-        Invoice::where('id',$data['order_id'])->where('transaction_id',$data['transaction_id'])->update([
+        Invoice::where('id',$result->order_id)->where('transaction_id',$result->transaction_id)->update([
             'status'       =>   'cancelado',
             'date_payment' =>   Carbon::now(),
             'updated_at'   =>   Carbon::now()
