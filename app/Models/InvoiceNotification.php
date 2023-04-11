@@ -16,8 +16,9 @@ class InvoiceNotification extends Model
         'type_send',
         'date',
         'status',
-        'open',
-        'click',
+        'message_status',
+        'message',
+        'subject_whatsapp',
     ];
 
 
@@ -83,8 +84,9 @@ class InvoiceNotification extends Model
             'subject_whatsapp'  => '',
             'senpulse_email_id' => $senpulse_email_id,
             'status'            => null,
-            'open'              => null,
-            'click'             => null,
+            'message_status'    => null,
+            'message'           => null,
+            'subject_whatsapp'  => null,
             'created_at'        => Carbon::now(),
             'updated_at'        => Carbon::now()
         ]);
