@@ -118,8 +118,8 @@ class InvoiceNotification extends Model
         $data['text_whatsapp'] .= "$whats_description \n\n";
         $data['text_whatsapp'] .= "*Data da Fatura:* $whats_data_fatura \n";
         $data['text_whatsapp'] .= "*Vencimento:* $whats_data_vencimento \n";
+        $data['text_whatsapp'] .= "*Forma de pagamento:* $whats_payment_method \n";
         $data['text_whatsapp'] .= "*Total:* R$ $whats_price \n\n";
-        $data['text_whatsapp'] .= "*Forma de pagamento:* $whats_payment_method \n\n";
 
 
 
@@ -300,8 +300,8 @@ class InvoiceNotification extends Model
         $data['text_whatsapp'] .= "*Data da Fatura:* $whats_data_fatura \n";
         $data['text_whatsapp'] .= "*Vencimento:* $whats_data_vencimento \n";
         $data['text_whatsapp'] .= "*Data do Pagamento:* $whats_data_pagamento \n";
+        $data['text_whatsapp'] .= "*Forma de pagamento:* $whats_payment_method \n";
         $data['text_whatsapp'] .= "*Total:* R$ $whats_price \n\n";
-        $data['text_whatsapp'] .= "*Forma de pagamento:* $whats_payment_method \n\n";
 
 
         if($data['customer_phone'] != null){

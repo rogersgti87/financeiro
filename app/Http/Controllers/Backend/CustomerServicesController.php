@@ -220,7 +220,7 @@ class CustomerServicesController extends Controller
             'data_fatura'               => date('d/m/Y', strtotime($invoice->date_invoice)),
             'data_vencimento'           => date('d/m/Y', strtotime($invoice->date_end)),
             'proxima_data_vencimento'   => date('d/m/Y', strtotime($invoice->date_end)),
-            'price'                     => number_format($invoice->price, 2),
+            'price'                     => number_format($invoice->price, 2,',','.'),
             'payment_method'            => $invoice->payment_method,
             'description'               => $invoice->description,
             'description_whatsapp'      => $getService->name . ' - ' . $result['dominio'],
