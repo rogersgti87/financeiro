@@ -21,7 +21,7 @@
     <header>
       <div class="">
         <div class="d-flex">
-          <div class="mx-3">
+          <div class="mx-12">
             <div id="logo">
               <a href="javascript:;">
                 <img src="{{ asset('galerias/logo.png') }}" alt="Painel de Controle" class="img-fluid" style="width:100px;">
@@ -31,7 +31,6 @@
           <div class="flex-fill">
             <div class="header-toolbar float-right">
               <ul>
-                <li><a href="" data-toggle="tooltip" data-placement="bottom" title="Notificações"><i class="fa fa-bell"></i></a></li>
                 <li><a href="" data-toggle="tooltip" data-placement="bottom" title="Meu Perfil"><i class="fa fa-user"></i></a></li>
                 <li><a href="{{ route('backend.configs') }}" data-toggle="tooltip" data-placement="bottom" title="Configurações"><i class="fa fa-cog"></i></a></li>
                 <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" data-toggle="tooltip" data-placement="bottom" title="Deslogar-se"><i class="fa fa-sign-out"></i></a></li>

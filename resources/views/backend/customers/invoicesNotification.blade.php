@@ -6,7 +6,75 @@ table.dataTable th {
 table.dataTable td {
   font-size: 12px;
 }
+
+.popup {
+  display: none;
+  position: fixed;
+  padding: 25px 10px 25px 10px;
+  width: 350px;
+  left: 50%;
+  margin-left: -200px;
+  height: 350px;
+  top: 50%;
+  margin-top: -200px;
+  background: #FFF;
+  border: 3px solid #333;
+  z-index: 20;
+  font-size:12px;
+  color:#333;
+}
+
+.popup:after {
+  position: fixed;
+  content: "";
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: -2;
+}
+
+.popup:before {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: #FFF;
+  z-index: -1;
+}
+.overflow{
+    height:100%;
+    overflow-y: scroll;
+    word-break: break-word;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+
 </style>
+
+
 
 <div class="table-responsive">
     <table class="display compact" style="width:100%" id="myTable">
@@ -19,12 +87,15 @@ table.dataTable td {
             <th>Email</th>
             <th>Status</th>
             <th>Mensagem Status</th>
+            <th>Mensagem</th>
             </tr>
         </thead>
         <tbody>
 
 
+
             @foreach ($notifications as $notification)
+
                 <tr>
                     <td>
                         @if ($notification->type_send == "whatsapp")
@@ -34,13 +105,7 @@ table.dataTable td {
                         @endif
                     </td>
                     <td>{{ $notification->type_send == 'whatsapp' ? $notification->subject_whatsapp : $notification->subject }}</td>
-
-                     @if($notification->type_send == 'whatsapp')
-                     <td>{{ $notification->timestamp != null ? date('d/m/Y H:i:s',strtotime($notification->timestamp)) : '-' }}</td>
-                     @else
-                     <td>{{ $notification->date != null ? date('d/m/Y H:i:s',strtotime($notification->date)) : '-'}}</td>
-                     @endif
-
+                     <td>{{ $notification->type_send == 'whatsapp'? date('d/m/Y H:i:s',strtotime($notification->date)) :  date('d/m/Y H:i:s',strtotime($notification->timestamp)) }}</td>
                     <td>
                         @if($notification->event == 'delivered')
                             Entregue
@@ -63,6 +128,18 @@ table.dataTable td {
                         @endif
                     </td>
                     <td>{{ $notification->message_status}}</td>
+                    <td>@if($notification->type_send == 'whatsapp')
+                        <div class="popup" id="popup-{{$notification->id}}">
+                            <div class="overflow">
+                                {!! str_replace("\n","<br>",json_decode($notification->message)->body) !!}
+                            <br>
+                            <br>
+                            </div>
+                            <button type="button" class="btn btn-danger" onclick="hide({{$notification->id}})">Fechar</button>
+                          </div>
+                        <button onclick="openMessage({{$notification->id}})" class="btn btn-xs btn-success" type="button">Mensagem</button>
+                        @endif
+                    </td>
                 </tr>
             @endforeach
 
@@ -74,4 +151,20 @@ table.dataTable td {
      $('#myTable').DataTable({
         order: [[2, 'desc']],
     });
-</script>
+
+
+
+    function openMessage(id){
+        $("#popup-"+id).attr("style", "display:block");
+    }
+
+    var hide = function(id) {
+        $("#popup-"+id).attr("style", "display:none");
+    }
+
+
+
+
+
+    </script>
+

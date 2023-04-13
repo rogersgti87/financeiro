@@ -88,11 +88,11 @@ class InvoicesController extends Controller
   {
 
     $notifications = DB::table('invoice_notifications as a')
-                        ->select('a.invoice_id', 'a.date' ,'ev.timestamp', 'a.senpulse_email_id', 'ev.event','a.subject_whatsapp',
+                        ->select('a.id','a.invoice_id', 'a.date' ,'ev.timestamp', 'a.senpulse_email_id', 'ev.event','a.subject_whatsapp',
                          'ev.recipient', 'ev.subject', 'a.type_send','a.status','a.message_status','a.message')
                         ->leftJoin('email_events as ev','ev.message_id','a.senpulse_email_id')
                         ->where('a.invoice_id',$invoice_id)
-                        ->orderby('ev.timestamp','desc')
+                        ->orderby('ev.timestamp','asc')
                         ->get();
 
 
