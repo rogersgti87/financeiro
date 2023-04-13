@@ -352,7 +352,7 @@ class InvoicesController extends Controller
 
         $invoice = DB::table('invoices as i')
                 ->select('i.id','i.date_invoice','i.date_end','i.description','c.email','c.email2','c.name','c.company','c.document','c.phone','c.address','c.number','c.complement',
-                'c.district','c.city','c.state','c.cep','i.payment_method','s.id as service_id','s.name as service_name','i.price as service_price','cs.dominio')
+                'c.district','c.city','c.state','c.cep','i.payment_method','s.id as service_id','s.name as service_name','i.price as service_price','cs.dominio','i.date_payment')
                 ->join('customer_services as cs','i.customer_service_id','cs.id')
                 ->join('customers as c','cs.customer_id','c.id')
                 ->join('services as s','cs.service_id','s.id')
