@@ -65,5 +65,7 @@ table.dataTable td {
 </div><!-- table-responsive -->
 
 <script>
-    $('#myTable').DataTable();
-    </script>
+     $('#myTable').DataTable({
+        order: [[2, 'desc']],
+    });
+</script>
