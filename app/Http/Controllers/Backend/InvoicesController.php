@@ -92,7 +92,7 @@ class InvoicesController extends Controller
                          'ev.recipient', 'ev.subject', 'a.type_send','a.status','a.message_status','a.message')
                         ->leftJoin('email_events as ev','ev.message_id','a.senpulse_email_id')
                         ->where('a.invoice_id',$invoice_id)
-                        ->orderby('a.id','desc')
+                        ->orderby('ev.timestamp','desc')
                         ->get();
 
 
