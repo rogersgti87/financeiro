@@ -18,7 +18,7 @@ class CreateInvoiceNotificationsTable extends Migration
             $table->integer('invoice_id');
             $table->string('subject_whatsapp')->nullable();
             $table->string('type_send');
-            $table->date('date');
+            $table->datetime('date');
             $table->string('senpulse_email_id')->nullable();
             $table->string('status')->nullable();
             $table->text('message_status')->nullable();
