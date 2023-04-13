@@ -29,7 +29,7 @@ class RememberInvoiceCron extends Command
         INNER JOIN customers c ON  cs.customer_id = c.id
         INNER JOIN services  s ON  cs.service_id  = s.id
         WHERE NOT EXISTS (SELECT * FROM invoice_notifications b WHERE i.id = b.invoice_id AND CURRENT_DATE = b.date)
-        and i.status = 'nao_pago'";
+        and i.status = 'nao_pago' AND i.date_end <= CURRENT_DATE";
 
    $verifyInvoices = DB::select($sql);
 
