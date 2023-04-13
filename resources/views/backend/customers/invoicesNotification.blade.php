@@ -34,7 +34,13 @@ table.dataTable td {
                         @endif
                     </td>
                     <td>{{ $notification->type_send == 'whatsapp' ? $notification->subject_whatsapp : $notification->subject }}</td>
-                    <td>{{ date('d/m/Y H:i:s',strtotime($notification->timestamp)) }}</td>
+
+                     @if($notification->type_send == 'whatsapp')
+                     <td>{{ $notification->timestamp != null ? date('d/m/Y H:i:s',strtotime($notification->timestamp)) : '-' }}</td>
+                     @else
+                     <td>{{ $notification->date != null ? date('d/m/Y H:i:s',strtotime($notification->date)) : '-'}}</td>
+                     @endif
+
                     <td>
                         @if($notification->event == 'delivered')
                             Entregue
