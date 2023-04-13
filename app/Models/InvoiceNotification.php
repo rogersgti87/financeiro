@@ -282,6 +282,20 @@ class InvoiceNotification extends Model
 
         $senpulse_email_id = json_decode($result)->id;
 
+        DB::table('invoice_notifications')->insert([
+            'invoice_id'        => $data['invoice_id'],
+            'type_send'         => 'email',
+            'date'              => Carbon::now(),
+            'subject_whatsapp'  => '',
+            'senpulse_email_id' => $senpulse_email_id,
+            'status'            => null,
+            'message_status'    => null,
+            'message'           => null,
+            'subject_whatsapp'  => null,
+            'created_at'        => Carbon::now(),
+            'updated_at'        => Carbon::now()
+        ]);
+
 
         $whats_customer_name            = $data['customer'];
         $whats_invoice_id               = $data['invoice_id'];
@@ -327,11 +341,11 @@ class InvoiceNotification extends Model
                 $whats_message          = '';
             }
 
-
             DB::table('invoice_notifications')->insert([
                 'invoice_id'        => $data['invoice_id'],
                 'type_send'         => 'whatsapp',
                 'date'              => Carbon::now(),
+                'subject_whatsapp'  => $data['title'],
                 'senpulse_email_id' => '',
                 'status'            => $whats_status == true ? 'Error' : 'Success',
                 'message_status'    => $whats_message_status,

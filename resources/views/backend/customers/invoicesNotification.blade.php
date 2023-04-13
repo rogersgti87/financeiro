@@ -34,7 +34,7 @@ table.dataTable td {
                         @endif
                     </td>
                     <td>{{ $notification->type_send == 'whatsapp' ? $notification->subject_whatsapp : $notification->subject }}</td>
-                    <td>{{ \Carbon\Carbon::parse($notification->timestamp)->format('d/m/Y H:i:s') }}</td>
+                    <td>{{ date('d/m/Y H:i:s',strtotime($notification->timestamp)) }}</td>
                     <td>
                         @if($notification->event == 'delivered')
                             Entregue
