@@ -82,7 +82,7 @@ class WebHookController extends Controller
 
 
         $invoice = DB::table('invoices as i')
-        ->select('i.id','i.date_invoice','i.date_end','i.description','c.email','c.email2','c.name','c.company','c.document','c.phone','c.address','c.number','c.complement',
+        ->select('i.id','i.date_invoice','i.date_end','i.description','i.date_payment','c.email','c.email2','c.name','c.company','c.document','c.phone','c.address','c.number','c.complement',
         'c.district','c.city','c.state','c.cep','c.payment_method','s.id as service_id','s.name as service_name','i.price as service_price','cs.dominio')
         ->join('customer_services as cs','i.customer_service_id','cs.id')
         ->join('customers as c','cs.customer_id','c.id')
@@ -100,7 +100,7 @@ class WebHookController extends Controller
             'company'                   => $invoice->company,
             'data_fatura'               => date('d/m/Y', strtotime($invoice->date_invoice)),
             'data_vencimento'           => date('d/m/Y', strtotime($invoice->date_end)),
-            'data_pagamento'            => date('d/m/Y', strtotime($invoice->date_end)),
+            'data_pagamento'            => date('d/m/Y', strtotime($invoice->date_payment)),
             'price'                     => number_format($invoice->service_price, 2),
             'payment_method'            => $invoice->payment_method,
             'description'               => $invoice->description,
