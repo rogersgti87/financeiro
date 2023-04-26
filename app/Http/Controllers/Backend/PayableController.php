@@ -50,12 +50,12 @@ class PayableController extends Controller
 
         if($this->request->input('filter')){
             $data = $this->model->orderByRaw("$column_name")
-                        ->select('id','category_id','description','price','date_payable','date_end','date_payment',DB::raw("(select sum(price) from payables where date_end between '$data_ini' and '$data_fim' $status) as total"))
+                        ->select('id','category_id','description','price','date_payable','date_end','date_payment','status',DB::raw("(select sum(price) from payables where date_end between '$data_ini' and '$data_fim' $status) as total"))
                         ->whereraw("date_end between '$data_ini' and '$data_fim' $status")
                         ->paginate(15);
         }else{
             $data = $this->model->orderByRaw("$column_name")
-                        ->select('id','category_id','description','price','date_payable','date_end','date_payment',DB::raw("(select sum(price) from payables) as total"))
+                        ->select('id','category_id','description','price','date_payable','date_end','date_payment','status',DB::raw("(select sum(price) from payables) as total"))
                         ->paginate(15);
         }
 
