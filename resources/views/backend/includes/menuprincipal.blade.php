@@ -10,6 +10,7 @@
 
   <li><a href="{{ route('backend.services') }}"><i class="fa fa-cubes"></i> Produtos/Serviços</a></li>
   <li><a href="{{ route('backend.invoices') }}"><i class="fa fa-book"></i> Faturas</a></li>
+  <li><a href="{{ route('backend.payables') }}"><i class="fa fa-book"></i> Contas a pagar</a></li>
   <li><a href="{{ route('backend.reports') }}"><i class="fa fa-flag"></i> Relatórios</a></li>
 
 </ul>

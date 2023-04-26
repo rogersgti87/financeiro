@@ -1,14 +1,44 @@
 @extends('backend.base')
-@section('title', 'Faturas')
+@section('title', 'Contas a Pagar')
 
 @section('content')
     <section>
         <div class="">
             <div class="row">
                 <div class="col-xs-12 col-md-12">
+                    <div class="card-box">
+                        <form class="form-busca" action="{{url($filter)}}">
+                            <input type="hidden" name="filter" value="true">
+                            <div class="form-row">
+                                <div class="form-group col-md-2 col-sm-12">
+                                    <label>Data Inicial</label>
+                                    <input type="text" autocomplete="off" class="form-control formatedDate" name="filter_data_ini" value="{{ isset(request()->filter_data_ini) ? request()->filter_data_ini : date('d/m/Y') }}">
+                                </div>
+                                <div class="form-group col-md-2 col-sm-12">
+                                    <label>Data Final</label>
+                                    <input type="text" autocomplete="off" class="form-control formatedDate" name="filter_data_fim" value="{{ isset(request()->filter_data_fim) ? request()->filter_data_fim : date('d/m/Y') }}">
+                                </div>
+                                <div class="form-group col-md-2 col-sm-12">
+                                    <label>Status</label>
+                                    <select class="form-control" name="filter_status" id="filter-status">
+                                        <option {{isset(request()->filter_status) && request()->filter_status == 'all' ? 'selected' : ''}} value="all">Todos</option>
+                                        <option {{isset(request()->filter_status) && request()->filter_status == 'Pago' ? 'selected' : ''}} value="Pago">Pago</option>
+                                        <option {{isset(request()->filter_status) && request()->filter_status == 'Nao pago' ? 'selected' : ''}} value="Nao pago">Nao pago</option>
+                                        <option {{isset(request()->filter_status) && request()->filter_status == 'Cancelado' ? 'selected' : ''}} value="Cancelado">Cancelado</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group" style="display: flex; align-items: center;margin-top:30px;">
+                                    <button type="submit" id="btn-buscar" class="btn btn-primary">BUSCAR</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">@yield('title') ({{ count($results) }})</h5>
+                            <h5 class="card-title">@yield('title') ({{ count($data) }}) <a href="#"
+                                    class="btn btn-sm btn-success float-right" id="button-create" data-type="create"><i
+                                        class="fa fa-plus"></i> Adicionar Conta</a>Total: R$ {{ isset($data[0]) ? $data[0]->total : '0,00'}}</h5>
                             <p><small>1 item(s) encontrado(s), Página 1 de 1</small></p>
                             <hr>
                             <div class="table-responsive">
@@ -16,73 +46,55 @@
                                     <thead>
                                         <th width="40px">
                                             <div class="form-group form-check">
-                                                <input type="checkbox" id="checkAll" value="" class="form-check-input">
+                                                <input type="checkbox" class="form-check-input" id="selectId">
                                             </div>
                                         </th>
                                         <th width="50px"><a href=""><i class="fa fa-sort"></i></a> #</th>
-                                        <th><a href=""><i class="fa fa-sort"></i></a> Cliente</th>
-                                        <th><a href=""><i class="fa fa-sort"></i></a> Data da Fatura</th>
+                                        <th><a href=""><i class="fa fa-sort"></i></a> Categoria</th>
+                                        <th><a href=""><i class="fa fa-sort"></i></a> Descrição</th>
+                                        <th><a href=""><i class="fa fa-sort"></i></a> Valor</th>
+                                        <th><a href=""><i class="fa fa-sort"></i></a> Criado</th>
                                         <th><a href=""><i class="fa fa-sort"></i></a> Vencimento</th>
-                                        <th><a href=""><i class="fa fa-sort"></i></a> Pago em</th>
-                                        <th><a href=""><i class="fa fa-sort"></i></a> Total</th>
-                                        <th><a href=""><i class="fa fa-sort"></i></a> Método</th>
+                                        <th><a href=""><i class="fa fa-sort"></i></a> Data Pagamento</th>
                                         <th>Status</th>
-                                        <th width="100px" class="text-center">Ações</th>
+                                        <th>Ações</th>
                                     </thead>
                                     <tbody>
                                         <form class="form" id="form-table">
                                             {{ csrf_field() }}
-                                            @foreach ($results as $result)
+                                            @foreach ($data as $result)
                                                 <tr>
                                                     <td>
                                                         <div class="form-group form-check">
-                                                            <input type="checkbox" name="selectedInvoices[]"
+                                                            <input type="checkbox" name="selected[]"
                                                                 value="{{ $result->id }}" class="form-check-input">
                                                         </div>
                                                     </td>
-                                                    <td><span
-                                                            class="d-inline d-sm-inline d-md-inline d-lg-none">#</span>{{ $result->id }}
-                                                    </td>
-                                                    <td><a
-                                                            href="{{ url('customers-details/' . $result->customer_id) }}">{{ $result->nameCustomer }}</a>
-                                                    </td>
-                                                    <td><span
-                                                            class="d-inline d-sm-inline d-md-inline d-lg-none">Fatura:</span>
-                                                        {{ \Carbon\Carbon::parse($result->date_invoice)->format('d/m/Y') }}
-                                                    </td>
-                                                    <td><span
-                                                            class="d-inline d-sm-inline d-md-inline d-lg-none">Vencimento:</span>
-                                                        {{ \Carbon\Carbon::parse($result->date_end)->format('d/m/Y') }}
-                                                    </td>
-                                                    <td><span class="d-inline d-sm-inline d-md-inline d-lg-none">Pago
-                                                            em:</span>
-                                                        {{ $result->date_payment ? \Carbon\Carbon::parse($result->date_payment)->format('d/m/Y') : '-' }}
-                                                    </td>
-                                                    <td><span
-                                                            class="d-inline d-sm-inline d-md-inline d-lg-none">Total:</span>
-                                                        R$ {{ $result->price }}</td>
-                                                    <td><b>{{ $result->payment_method }}</b></td>
+                                                    <td>{{ $result->id }}</td>
+                                                    <td>{{ $result->category_id }}</td>
+                                                    <td>{{ $result->description }}</td>
+                                                    <td>R$ {{ number_format($result->price,2,',','.') }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($result->date_payable)->format('d/m/Y') }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($result->date_end)->format('d/m/Y') }}</td>
+                                                    <td> {{ $result->date_payment ? \Carbon\Carbon::parse($result->date_payment)->format('d/m/Y') : '-' }}</td>
                                                     <td>
-                                                        @if ($result->status == 'pago')
+                                                        @if ($result->status == 'Pago')
                                                             <span class="badge badge-success"><i class="fa fa-check"></i>
-                                                                Pago</span>
-                                                        @elseif($result->status == 'nao_pago')
-                                                            <span class="badge badge-danger"><i class="fa fa-minus"></i> Não
-                                                                Pago</span>
+                                                                {{ $result->status }}</span>
+                                                        @elseif($result->status == 'Cancelado')
+                                                            <span class="badge badge-info"><i class="fa fa-minus"></i>
+                                                                {{ $result->status }}</span>
                                                         @else
                                                             <span class="badge badge-secondary"><i class="fa fa-remove"></i>
-                                                                Cancelado</span>
+                                                                {{ $result->status }}</span>
                                                         @endif
                                                     </td>
-                                                    <td class="text-center">
+                                                    <td>
                                                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                                             <a href="#" id="button-edit" data-id="{{ $result->id }}"
-                                                                data-customer_id="{{ $result->customer_id }}"
                                                                 data-type="edit" class="btn btn-xs btn-info"
                                                                 data-toggle="tooltip" data-placement="bottom"
-                                                                title="Editar Fatura"><i class="fa fa-edit"></i> <span
-                                                                    class="d-inline d-sm-inline d-md-inline d-lg-none">Editar
-                                                                    Fatura</span> </a>
+                                                                title="Editar Serviço"><i class="fa fa-edit"></i></a>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -95,27 +107,34 @@
                                     <div><a href="#" id="btn-delete" class="btn btn-xs btn-danger"><i
                                                 class="fa fa-times"></i> Remover selecionados</a></div>
                                     <div class="flex-grow-1">
-                                        {{ $results->appends(request()->query())->links() }}
+                                        {{ $data->appends(request()->query())->links() }}
                                     </div>
                                 </div><!-- d-flex -->
                             </div><!-- table-responsive -->
                             <hr>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <a href="#" class="btn btn-sm btn-success" id="button-create" data-type="create"><i
+                                            class="fa fa-plus"></i> Adicionar Conta a Pagar</a>
+                                </div>
+                            </div>
 
 
-                            <!-- Modal Create Invoice -->
-                            <div class="modal fade" id="modalInvoices" tabindex="-1" role="dialog"
-                                aria-labelledby="modalInvoicesLabel" aria-hidden="true">
+                            <!-- Modal Create User -->
+                            <div class="modal fade" id="modalPayables" tabindex="-1" role="dialog"
+                                aria-labelledby="modalPayablesLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                         <form action="" class="form-horizontal" id="form-request">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="modalInvoicesLabel"></h5>
+                                                <h5 class="modal-title" id="modalPayablesLabel">Nova Conta</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
                                             <div class="modal-body" id="form-content">
                                                 <!-- conteudo -->
+                                                @include('backend.payables.form')
                                                 <!-- conteudo -->
                                             </div><!-- modal-body -->
                                             <div class="modal-footer">
@@ -143,11 +162,19 @@
 
 @section('jsPage')
     <script src="{{ asset('/general/plugins/sweetalert/sweetalert2.min.js') }}"></script>
+
     <script>
+
+        $(document).ready(function(){
+            formatedDate();
+        });
+
+
+
         // Open Modal - Create
         $(document).on("click", "#button-create", function() {
             $("#form-content").html('');
-            $("#modalInvoices").modal('show');
+            $("#modalPayables").modal('show');
             var url = `{{ url($url_action . '-create') }}`;
             $.get(url,
                 $(this)
@@ -169,11 +196,9 @@
             e.preventDefault();
 
             let id = $(this).data('id');
-            let customer_id = $(this).data('customer_id');
             $("#form-content").html('');
-            $("#modalInvoices .modal-title").html('Editar Fatura #' + id);
-            $("#modalInvoices").modal('show');
-            var url = `{{ url($url_action . '-edit/${customer_id}/${id}/') }}`;
+            $("#modalPayables").modal('show');
+            var url = `{{ url($url_action . '-edit/${id}/') }}`;
             $.get(url,
                 $(this)
                 .addClass('modal-scrollfix')
@@ -184,71 +209,8 @@
                     $("#form-content").html(data);
                     $("#btn-salvar").attr('data-type', 'edit').attr('data-id', id);
                     formatedDate();
-                    // formatedPrice();
+                    formatedPrice();
                     formatedPhone();
-
-                    // Button Confirm Payment Invoice
-                    $(document).on('click', '#button-confirm-payment', function(e) {
-                        e.preventDefault();
-                        $.ajaxSetup({
-                            headers: {
-                                'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                            }
-                        });
-
-                        let id_invoice = $(this).data('id-invoice');
-
-
-                        if (id_invoice) {
-                            var url = `{{ url('invoices-confirm/${id_invoice}') }}`;
-                            var method = 'PUT';
-                        }
-
-                        var data = $('#form-request-invoice-confirm').find('input:checked');
-                        console.log(data);
-
-                        $.ajax({
-                            url: url,
-                            data: data,
-                            method: method,
-                            success: function(data) {
-                                Swal.fire({
-                                    text: data,
-                                    icon: 'success',
-                                    showClass: {
-                                        popup: 'animate_animated animate_backInUp'
-                                    },
-                                    onClose: () => {
-                                        // Loading page listagem
-                                        // location.href = "{{ url($url_action) }}";
-                                        location.reload();
-                                    }
-                                });
-                            },
-                            error: function(xhr) {
-                                if (xhr.status === 422) {
-                                    Swal.fire({
-                                        text: 'Validação: ' + xhr.responseJSON,
-                                        icon: 'warning',
-                                        showClass: {
-                                            popup: 'animate_animated animate_wobble'
-                                        }
-                                    });
-                                } else {
-                                    Swal.fire({
-                                        text: 'Erro interno, informe ao suporte: ' +
-                                            xhr.responseJSON,
-                                        icon: 'error',
-                                        showClass: {
-                                            popup: 'animate_animated animate_wobble'
-                                        }
-                                    });
-                                }
-                            }
-                        });
-                    });
-                    // end button Confirm Payment Service
-
                 });
         });
 

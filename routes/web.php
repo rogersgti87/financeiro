@@ -10,6 +10,7 @@ use App\Http\Controllers\Backend\ServicesActivesController;
 use App\Http\Controllers\Backend\ServiceController;
 use App\Http\Controllers\Backend\ReportsController;
 use App\Http\Controllers\Backend\ConfigController;
+use App\Http\Controllers\Backend\PayableController;
 
 
 Route::prefix('webhook')->group(function () {
@@ -57,6 +58,17 @@ Route::middleware('auth')->group(function () {
   Route::put('/invoices-confirm/{id}', [InvoicesController::class,'confirm'])->name('backend.invoices.confirm');
   Route::get('/invoices-details/{id}', [InvoicesController::class,'show'])->name('backend.invoices.show');
   Route::delete('/invoices-delete', [InvoicesController::class,'destroy'])->name('backend.invoices.delete');
+
+   //Payables
+   Route::get('/payables', [PayableController::class,'index'])->name('backend.payables');
+   Route::get('/payables-create', [PayableController::class,'create'])->name('backend.payables.create');
+   Route::get('/payables-notification/{invoice_id}', [PayableController::class,'notification'])->name('backend.payables.notification');
+   Route::post('/payables-store', [PayableController::class,'store'])->name('backend.payables.store');
+   Route::get('/payables-edit/{id}', [PayableController::class,'edit'])->name('backend.payables.edit');
+   Route::put('/payables-update/{id}', [PayableController::class,'update'])->name('backend.payables.update');
+   Route::put('/payables-confirm/{id}', [PayableController::class,'confirm'])->name('backend.payables.confirm');
+   Route::get('/payables-details/{id}', [PayableController::class,'show'])->name('backend.payables.show');
+   Route::delete('/payables-delete', [PayableController::class,'destroy'])->name('backend.payables.delete');
 
   //Services Actives
   Route::get('/servicescustomers', [ServicesActivesController::class,'index'])->name('backend.services.customers');

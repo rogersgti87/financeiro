@@ -15,14 +15,15 @@ class CreatePayablesTable extends Migration
     {
         Schema::create('payables', function (Blueprint $table) {
             $table->id('id');
-            $table->integer('supply_id');
+            $table->integer('category_id');
             $table->string('description')->nullable();
             $table->float('price', 8, 2)->default('0');
             $table->string('payment_method');
-            $table->date('date_invoice');
+            $table->date('date_payable');
             $table->date('date_end');
+            $table->string('period');
             $table->date('date_payment')->nullable();
-            $table->enum('status', ['cancelado','pago','nao_pago','estornado']);
+            $table->enum('status', ['Cancelado','Pago','Nao pago']);
             $table->timestamps();
         });
     }

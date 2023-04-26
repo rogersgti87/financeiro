@@ -11,16 +11,22 @@ class ServiceSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('services')->insert([
-            'name' => 'Hospedagem',
-            'price' => '30.00',
-            'price_trimestral' => '85.50',
-            'price_anual' => '324',
-            'period' => 'recorrente',
-            'status' => 'Ativo',
-            'created_at' => \Carbon\Carbon::now(),
-            'updated_at' => \Carbon\Carbon::now(),
-        ]);
+
+        if(DB::table('services')->count() < 1){
+
+            DB::table('services')->insert([
+                'name' => 'Hospedagem',
+                'price' => '30.00',
+                'price_trimestral' => '85.50',
+                'price_anual' => '324',
+                'period' => 'recorrente',
+                'status' => 'Ativo',
+                'created_at' => \Carbon\Carbon::now(),
+                'updated_at' => \Carbon\Carbon::now(),
+            ]);
+
+        }
+
 
     }
 }

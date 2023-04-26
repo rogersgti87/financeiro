@@ -59,9 +59,11 @@ class InvoicesController extends Controller
         $newValue = "'$value'";
       }
 
-      $results = DB::table('invoices as a')
-        ->select('a.id', 'a.customer_id', 'a.description', 'a.price', 'a.payment_method', 'a.date_invoice', 'a.date_end', 'a.date_payment', 'a.status', 'b.name as nameCustomer')
-        ->join('customers as b', 'a.customer_id', 'b.id')
+      $results = DB::table('invoices as i')
+        ->select('i.id', 'i.customer_service_id', 'i.description', 'i.price', 'i.payment_method', 'i.date_invoice', 'i.date_end',
+        'i.date_payment', 'i.status', 'c.name as nameCustomer','c.id as customer_id')
+        ->join('customer_services as cs', 'cs.id', 'i.customer_service_id')
+        ->join('customers as c', 'cs.customer_id', 'c.id')
         ->orderByRaw("$column_name")
         ->whereraw("$field $operador $newValue")
         ->paginate(30);

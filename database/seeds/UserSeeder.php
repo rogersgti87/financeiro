@@ -11,13 +11,18 @@ class UserSeeder extends Seeder
    */
   public function run()
   {
-    DB::table('users')->delete();
 
-    DB::table('users')->insert([
-      'name' => 'teste',
-      'email' => 'teste@teste.com',
-      'password' => bcrypt('123456'),
-      'remember_token' => Str::random(10),
-    ]);
+    if(DB::table('users')->count() < 1){
+
+        DB::table('users')->insert([
+            'name' => 'teste',
+            'email' => 'teste@teste.com',
+            'password' => bcrypt('123456'),
+            'remember_token' => Str::random(10),
+          ]);
+
+    }
+
+
   }
 }
