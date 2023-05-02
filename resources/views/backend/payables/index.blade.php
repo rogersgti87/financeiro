@@ -12,11 +12,11 @@
                             <div class="form-row">
                                 <div class="form-group col-md-2 col-sm-12">
                                     <label>Data Inicial</label>
-                                    <input type="text" autocomplete="off" class="form-control formatedDate" name="filter_data_ini" value="{{ isset(request()->filter_data_ini) ? request()->filter_data_ini : date('d/m/Y') }}">
+                                    <input type="text" autocomplete="off" class="form-control formatedDate" name="filter_data_ini" value="{{ isset(request()->filter_data_ini) ? request()->filter_data_ini : Carbon\Carbon::now()->startOfMonth()->format('d/m/Y') }}">
                                 </div>
                                 <div class="form-group col-md-2 col-sm-12">
                                     <label>Data Final</label>
-                                    <input type="text" autocomplete="off" class="form-control formatedDate" name="filter_data_fim" value="{{ isset(request()->filter_data_fim) ? request()->filter_data_fim : date('d/m/Y') }}">
+                                    <input type="text" autocomplete="off" class="form-control formatedDate" name="filter_data_fim" value="{{ isset(request()->filter_data_fim) ? request()->filter_data_fim : Carbon\Carbon::now()->lastOfMonth()->format('d/m/Y') }}">
                                 </div>
                                 <div class="form-group col-md-2 col-sm-12">
                                     <label>Status</label>
@@ -38,7 +38,7 @@
                         <div class="card-body">
                             <h5 class="card-title">@yield('title') ({{ count($data) }}) <a href="#"
                                     class="btn btn-sm btn-success float-right" id="button-create" data-type="create"><i
-                                        class="fa fa-plus"></i> Adicionar Conta</a>Total: R$ {{ isset($data[0]) ? $data[0]->total : '0,00'}}</h5>
+                                        class="fa fa-plus"></i> Adicionar Conta</a> @if(isset($data[0]))@if(request()->filter == true)Total: R$ {{  $data[0]->total != '' ? number_format($data[0]->total,2,',','.') : '0,00'}} - @endif Total Pago: R$ {{ $data[0]->total_pago != '' ? number_format($data[0]->total_pago,2,',','.') : '0,00'}} - Total à Pagar: R$ {{ $data[0]->total_pagar != '' ? number_format($data[0]->total_pagar,2,',','.') : '0,00'}}@endif</h5>
                             <p><small>1 item(s) encontrado(s), Página 1 de 1</small></p>
                             <hr>
                             <div class="table-responsive">

@@ -43,21 +43,26 @@ class PayableController extends Controller
             $column_name = "id desc";
         }
 
-        $data_ini  = $this->request->input('filter_data_ini') ? Carbon::createFromFormat('d/m/Y', $this->request->input('filter_data_ini'))->format('Y-m-d') : Carbon::now()->startOfMonth();
-        $data_fim  = $this->request->input('filter_data_fim') ? Carbon::createFromFormat('d/m/Y', $this->request->input('filter_data_fim'))->format('Y-m-d') : Carbon::now()->lastOfMonth();;
-        $status    = $this->request->input('filter_status') == 'all' ? '' : " and status = '".$this->request->input('filter_status')."'";
+        $data_ini  = $this->request->input('filter_data_ini') ? Carbon::createFromFormat('d/m/Y', $this->request->input('filter_data_ini'))->format('Y-m-d') : Carbon::now()->startOfMonth()->format('Y-m-d');
+        $data_fim  = $this->request->input('filter_data_fim') ? Carbon::createFromFormat('d/m/Y', $this->request->input('filter_data_fim'))->format('Y-m-d') : Carbon::now()->lastOfMonth()->format('Y-m-d');
+
+        if($this->request->input('filter_status')){
+            $status = $this->request->input('filter_status') == 'all' ? '' : " and status = '".$this->request->input('filter_status')."'";
+        }else{
+            $status = "";
+        }
 
 
-        //if($this->request->input('filter')){
-            $data = $this->model->orderByRaw("$column_name")
-                        ->select('id','category_id','description','price','date_payable','date_end','date_payment','status',DB::raw("(select sum(price) from payables where date_end between '$data_ini' and '$data_fim' $status) as total"))
-                        ->whereraw("date_end between '$data_ini' and '$data_fim' $status")
-                        ->paginate(15);
-        // }else{
-        //     $data = $this->model->orderByRaw("$column_name")
-        //                 ->select('id','category_id','description','price','date_payable','date_end','date_payment','status',DB::raw("(select sum(price) from payables) as total"))
-        //                 ->paginate(15);
-        //}
+        $data = $this->model->orderByRaw("$column_name")
+                    ->select('id','category_id','description','price','date_payable','date_end','date_payment','status',
+                    DB::raw("
+                    (select sum(price) from payables where date_end between '$data_ini' and '$data_fim' $status) as total,
+                    (select sum(price) from payables where date_end between '$data_ini' and '$data_fim' and status = 'Nao pago') as total_pagar,
+                    (select sum(price) from payables where date_end between '$data_ini' and '$data_fim' and status = 'Pago') as total_pago,
+                    (select sum(price) from payables where date_end between '$data_ini' and '$data_fim' and status = 'Cancelado') as total_cancelado
+                    "))
+                    ->whereraw("date_end between '$data_ini' and '$data_fim' $status")
+                    ->paginate(15);
 
 
         return view($this->datarequest['diretorio'].'.index',compact('column','order','data'))->with($this->datarequest);
