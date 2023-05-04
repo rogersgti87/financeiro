@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
         commands\GenerateInvoiceCron::class,
         //commands\VerifyInvoiceStatusCron::class,
         commands\RememberInvoiceCron::class,
+        commands\BackupSQLCron::class,
     ];
 
     /**
@@ -29,8 +30,9 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')->hourly();
 
         $schedule->command('generateinvoice:cron')->everyMinute();
-        $schedule->command('generateinvoicestatus:cron')->everyMinute();
+        //$schedule->command('generateinvoicestatus:cron')->everyMinute();
         $schedule->command('rememberinvoice:cron')->everyMinute();
+        $schedule->command('backupsql:cron')->hourly();
 
     }
 

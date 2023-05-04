@@ -9,6 +9,8 @@ use Carbon\Carbon;
 use App\Models\Payable;
 use App\Models\Category;
 use DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Console\Command;
 
 class PayableController extends Controller
 {
@@ -32,7 +34,6 @@ class PayableController extends Controller
 
   public function index()
   {
-
         $column    = $this->request->input('column');
         $order     = $this->request->input('order') == 'desc' ? 'asc' : 'desc';
 
