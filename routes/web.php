@@ -16,7 +16,7 @@ use App\Http\Controllers\Backend\PayableController;
 Route::prefix('webhook')->group(function () {
     Route::post('sendpulse-smtp', [WebHookController::class,'index']);
     Route::post('paghiper', [WebHookController::class,'paghiper']);
-    Route::get('backups', [WebHookController::class,'backups']);
+    Route::get('backups/{user}', [WebHookController::class,'backups']);
 });
 
 /************************/
