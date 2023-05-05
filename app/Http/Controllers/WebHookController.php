@@ -129,4 +129,13 @@ class WebHookController extends Controller
   }
 
 
+  public function backups(Request $request){
+    $data = $request->all();
+    if($data['token'] == 'abc,1234'){
+        return DB::table('customer_backups')->get();
+    }
+
+  }
+
+
 }
