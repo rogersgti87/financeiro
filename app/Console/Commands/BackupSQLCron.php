@@ -25,50 +25,52 @@ class BackupSQLCron extends Command
 
     foreach(DB::table('customer_backups')->where('status','Ativo')->get() as $result){
 
-    $filename = $result->database."-backup-" . Carbon::now()->format('YmdHis') . ".gz";
-    $command = "mysqldump --user=" . $result->user ." --password=" . $result->password . " --host=" . $result->host . " " . $result->database . "  | gzip > " . storage_path() . "/app/backup/". $filename;
+        if(!Storage::disk('backup')->exists(trim($result->database))) {
 
-    $returnVar = NULL;
-    $output  = NULL;
+            Storage::disk('backup')->makeDirectory(trim($result->database), 0775, true);
 
-    exec($command, $output, $returnVar);
-    \Log::info('terminou o backup sql - '.$filename);
-
-    \Log::info('Limpando cache config');
-    \Artisan::call('config:cache');
-    Config::set('filesystems.disks.google.folderId',$result->google_drive_folder_sql);
-
-    $file_store = Storage::disk('backup')->get($filename);
-
-    Storage::disk('google')->put($filename,$file_store);
-
-    \Log::info('backup sql enviado para o google drive - '.$filename);
-
-    \Log::info('verifica se existe o arquivo no google drive');
-    \Log::info(Storage::disk('google')->exists($filename));
-
-    $size_google_drive = Storage::disk('google')->size($filename);
-    \Log::info('Size google_drive: '.$size_google_drive);
-
-    $size_local = Storage::disk('backup')->size($filename);
-    \Log::info('Size local: '.$size_local);
-
-
-    while(true){
-        if($size_google_drive == $size_local){
-            \Log::info('Tamanho do arquivo igual.');
-            Storage::disk('backup')->delete($filename);
-            \Log::info('backup sql deletado - '.$filename);
-            break;
-        }else{
-            \Log::info('Tamanho do arquivo diferente.');
         }
-    }
+
+        \Log::info('Limpando cache config');
+        \Artisan::call('config:cache');
+        Config::set('filesystems.disks.google.folderId',$result->google_drive_folder_sql);
+
+        \Log::info($result->database);
+
+        foreach(Storage::disk('backup')->files(trim($result->database)) as $file){
+
+            $file_store = Storage::disk('backup')->get($file);
+            Storage::disk('google')->put(basename($file),$file_store);
+
+            \Log::info('backup sql enviado para o google drive - '.basename($file));
+
+            \Log::info('verifica se existe o arquivo no google drive');
+            \Log::info(Storage::disk('google')->exists(basename($file)));
+
+            $size_google_drive = Storage::disk('google')->size(basename($file));
+            \Log::info('Size google_drive: '.$size_google_drive);
+
+            $size_local = Storage::disk('backup')->size($file);
+            \Log::info('Size local: '.$size_local);
 
 
-    }
+            while(true){
+                if($size_google_drive == $size_local){
+                    \Log::info('Tamanho do arquivo igual.');
+                    Storage::disk('backup')->delete($file);
+                    \Log::info('backup sql deletado - '.basename($file));
+                    break;
+                }else{
+                    \Log::info('Tamanho do arquivo diferente.');
+                }
+            }
 
-    \Log::info('terminou o backup');
+        }
+
+
+        }
+
+    \Log::info('terminou o envio para o drive');
 
   }
 

@@ -34,6 +34,7 @@ class PayableController extends Controller
 
   public function index()
   {
+
         $column    = $this->request->input('column');
         $order     = $this->request->input('order') == 'desc' ? 'asc' : 'desc';
 
