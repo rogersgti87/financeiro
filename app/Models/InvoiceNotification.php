@@ -30,7 +30,7 @@ class InvoiceNotification extends Model
         $api_token  = $config->sendpulse_token;
         $api_key    = $config->sendpulse_secret;
 
-        $response = Http::post(env('API_HOST_SEND_PULSE').'/oauth/access_token',[
+        $response = Http::post('https://api.sendpulse.com/oauth/access_token',[
             'grant_type'        => 'client_credentials',
             'client_id'         =>  $api_token,
             'client_secret'     =>  $api_key
@@ -60,7 +60,7 @@ class InvoiceNotification extends Model
         );
         }
 
-        $response = Http::withToken($access_token)->post(env('API_HOST_SEND_PULSE').'/smtp/emails',[
+        $response = Http::withToken($access_token)->post('https://api.sendpulse.com/smtp/emails',[
             "email" =>  [
                 "subject"  => $data['title'],
                 "html" => base64_encode($data['body']),
@@ -236,7 +236,7 @@ class InvoiceNotification extends Model
         $api_token  = $config->sendpulse_token;
         $api_key    = $config->sendpulse_secret;
 
-        $response = Http::post(env('API_HOST_SEND_PULSE').'/oauth/access_token',[
+        $response = Http::post('https://api.sendpulse.com/oauth/access_token',[
             'grant_type'        => 'client_credentials',
             'client_id'         =>  $api_token,
             'client_secret'     =>  $api_key
@@ -266,7 +266,7 @@ class InvoiceNotification extends Model
         );
         }
 
-        $response = Http::withToken($access_token)->post(env('API_HOST_SEND_PULSE').'/smtp/emails',[
+        $response = Http::withToken($access_token)->post('https://api.sendpulse.com/smtp/emails',[
             "email" =>  [
                 "subject"  => $data['title'],
                 "html" => base64_encode($data['body']),

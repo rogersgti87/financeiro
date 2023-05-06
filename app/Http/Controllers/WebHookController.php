@@ -45,8 +45,8 @@ class WebHookController extends Controller
   {
     $data = $request->all();
     \Log::info($data);
-    $api_token  = env('API_TOKEN_PAG_HIPER');
-    $api_key    = env('API_KEY_PAG_HIPER');
+    $api_token  = 'GUY0NUU1AA4EBWID21B36INWY14GR9Z84X9SS3U2DZHO';
+    $api_key    = 'apk_49587512-BbMWUgPOyyjwePnrDopJtToAMHoEpZCq';
 
     $invoice = Invoice::where('transaction_id',$data['transaction_id'])->where('status','nao_pago')->first();
 

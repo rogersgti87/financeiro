@@ -40,8 +40,8 @@ class Invoice extends Model
                     ->where('i.id',$invoice_id)
                     ->first();
 
-        $api_token  = env('API_TOKEN_PAG_HIPER');
-        $api_key    = env('API_KEY_PAG_HIPER');
+        $api_token  = 'GUY0NUU1AA4EBWID21B36INWY14GR9Z84X9SS3U2DZHO';
+        $api_key    = 'apk_49587512-BbMWUgPOyyjwePnrDopJtToAMHoEpZCq';
 
         //Gerar PIX
         $response = Http::withHeaders([
@@ -99,8 +99,8 @@ class Invoice extends Model
       ->first();
 
 
-        $api_token  = env('API_TOKEN_PAG_HIPER');
-        $api_key    = env('API_KEY_PAG_HIPER');
+      $api_token  = 'GUY0NUU1AA4EBWID21B36INWY14GR9Z84X9SS3U2DZHO';
+      $api_key    = 'apk_49587512-BbMWUgPOyyjwePnrDopJtToAMHoEpZCq';
 
         //Gerar PIX
         $response = Http::withHeaders([
@@ -140,8 +140,8 @@ class Invoice extends Model
 
     public static function verifyStatusBilletPayment($transaction_id){
 
-        $api_token  = env('API_TOKEN_PAG_HIPER');
-        $api_key    = env('API_KEY_PAG_HIPER');
+        $api_token  = 'GUY0NUU1AA4EBWID21B36INWY14GR9Z84X9SS3U2DZHO';
+        $api_key    = 'apk_49587512-BbMWUgPOyyjwePnrDopJtToAMHoEpZCq';
 
 
         //Consultar status da transação
@@ -161,8 +161,8 @@ class Invoice extends Model
 
     public static function verifyStatusPixPayment($transaction_id){
 
-        $api_token  = env('API_TOKEN_PAG_HIPER');
-        $api_key    = env('API_KEY_PAG_HIPER');
+        $api_token  = 'GUY0NUU1AA4EBWID21B36INWY14GR9Z84X9SS3U2DZHO';
+        $api_key    = 'apk_49587512-BbMWUgPOyyjwePnrDopJtToAMHoEpZCq';
 
         //Consultar status da transação
         $response = Http::withHeaders([
