@@ -15,7 +15,7 @@ class CreateCustomerBackupsTable extends Migration
     {
         Schema::create('customer_backups', function (Blueprint $table) {
             $table->id('id');
-            $table->integer('customer_service_id');
+            $table->string('name');
             $table->string('google_drive_folder_sql')->nullable();
             $table->string('google_drive_folder_file')->nullable();
             $table->string('folder_path')->nullable();
@@ -24,7 +24,6 @@ class CreateCustomerBackupsTable extends Migration
             $table->string('user')->nullable();
             $table->string('password')->nullable();
             $table->string('port')->nullable();
-            $table->string('period')->nullable();
             $table->enum('status', ['Ativo','Inativo']);
             $table->timestamps();
         });

@@ -11,6 +11,7 @@ use App\Http\Controllers\Backend\ServiceController;
 use App\Http\Controllers\Backend\ReportsController;
 use App\Http\Controllers\Backend\ConfigController;
 use App\Http\Controllers\Backend\PayableController;
+use App\Http\Controllers\Backend\BackupController;
 
 
 Route::prefix('webhook')->group(function () {
@@ -82,6 +83,15 @@ Route::middleware('auth')->group(function () {
   Route::put('/services-update/{id}', [ServiceController::class,'update'])->name('backend.services.update');
   Route::get('/services-details/{id}', [ServiceController::class,'show'])->name('backend.services.show');
   Route::delete('/services-delete', [ServiceController::class,'destroy'])->name('backend.services.delete');
+
+  //Services
+  Route::get('/backups', [BackupController::class,'index'])->name('backend.backups');
+  Route::get('/backups-create', [BackupController::class,'create'])->name('backend.backups.create');
+  Route::post('/backups-store', [BackupController::class,'store'])->name('backend.backups.store');
+  Route::get('/backups-edit/{id}', [BackupController::class,'edit'])->name('backend.backups.edit');
+  Route::put('/backups-update/{id}', [BackupController::class,'update'])->name('backend.backups.update');
+  Route::get('/backups-details/{id}', [BackupController::class,'show'])->name('backend.backups.show');
+  Route::delete('/backups-delete', [BackupController::class,'destroy'])->name('backend.backups.delete');
 
 
   //Relatorios
