@@ -144,7 +144,6 @@ class InvoiceNotification extends Model
 
         $result = $response->getBody();
 
-        \Log::info($result);
         $whats_status           = json_decode($result)->error;
         if($whats_status == false){
             $whats_message_status   = json_decode($result)->message;
@@ -191,7 +190,6 @@ class InvoiceNotification extends Model
 
             $result = $response->getBody();
 
-            \Log::info($result);
             $whats_status           = json_decode($result)->error;
             if($whats_status == false){
                 $whats_message_status   = json_decode($result)->message;
@@ -333,7 +331,7 @@ class InvoiceNotification extends Model
             ]);
 
             $result = $response->getBody();
-            \Log::info($result);
+
             $whats_status           = json_decode($result)->error;
             if($whats_status == false){
                 $whats_message_status   = json_decode($result)->message;

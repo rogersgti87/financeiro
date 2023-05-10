@@ -44,7 +44,6 @@ class WebHookController extends Controller
   public function paghiper(Request $request)
   {
     $data = $request->all();
-    \Log::info($data);
     $api_token  = 'GUY0NUU1AA4EBWID21B36INWY14GR9Z84X9SS3U2DZHO';
     $api_key    = 'apk_49587512-BbMWUgPOyyjwePnrDopJtToAMHoEpZCq';
 
@@ -76,7 +75,7 @@ class WebHookController extends Controller
     if($result->status == 'completed' || $result->status == 'paid' || $result->status == 'reserved'){
         Invoice::where('id',$result->order_id)->where('transaction_id',$result->transaction_id)->update([
             'status'       =>   'pago',
-            'date_payment' =>   Carbon::now(),
+            'date_payment' =>   isset($data['paid_date']) ? date('d/m/Y', strtotime($data['paid_date'])) : Carbon::now(),
             'updated_at'   =>   Carbon::now()
         ]);
 
