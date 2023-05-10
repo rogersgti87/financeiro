@@ -39,7 +39,10 @@ class BackupFileCron extends Command
 
             foreach(Storage::disk('backup')->files(trim($result->database)) as $file){
 
-                if(substr($file,-7) == '.tar.gz'){
+
+                $file_extension = explode('.',$file);
+
+                if(substr($file_extension[1],0,4) == 'part'){
 
                 $file_store = Storage::disk('backup')->get($file);
                 Storage::disk('google')->put(basename($file),$file_store);
