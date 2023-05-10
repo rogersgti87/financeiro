@@ -37,6 +37,10 @@ class BackupFileCron extends Command
         //\Log::info($result->database);
         if(!empty(Storage::disk('backup')->files(trim($result->database)))){
 
+            Storage::disk('google')->makeDirectory(date('ymd'), 0775, true);
+
+
+
             foreach(Storage::disk('backup')->files(trim($result->database)) as $file){
 
 
