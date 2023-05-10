@@ -107,7 +107,8 @@ class InvoiceNotification extends Model
         }
 
 
-        $data['text_whatsapp'] = "Olá $whats_customer_name, tudo bem?\n\n";
+        $data['text_whatsapp'] = "*MENSAGEM AUTOMÁTICA*\n\n";
+        $data['text_whatsapp'] .= "Olá $whats_customer_name, tudo bem?\n\n";
 
         if(isset($data['text_remember']) && $data['text_remember'] != null){
             $data['text_whatsapp'] .= "$whats_text_remember *Fatura #$whats_invoice_id* \n\n";
@@ -307,7 +308,8 @@ class InvoiceNotification extends Model
         $whats_payment_method           = $data['payment_method'];
 
 
-        $data['text_whatsapp'] = "Olá $whats_customer_name, tudo bem?\n\n";
+        $data['text_whatsapp'] = "*MENSAGEM AUTOMÁTICA*\n\n";
+        $data['text_whatsapp'] .= "Olá $whats_customer_name, tudo bem?\n\n";
         $data['text_whatsapp'] .= "Seu pagamento referente a *Fatura #$whats_invoice_id* foi confimado!\n\n";
         $data['text_whatsapp'] .= "*Serviço(s) Contratado(s):* \n\n";
         $data['text_whatsapp'] .= "$whats_description \n\n";
