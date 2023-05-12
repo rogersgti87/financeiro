@@ -35,18 +35,6 @@ class PayableController extends Controller
   public function index()
   {
 
-
-
-    //dd(Storage::disk('google')->listContents('1Q3srOXG_Hk_5QLzhlh-2WAMbeAn_Hkkq',true));
-
-
-       dd(Storage::disk('google')->listContents('1Q3srOXG_Hk_5QLzhlh-2WAMbeAn_Hkkq',true));
-
-
-
-
-
-
         $column    = $this->request->input('column');
         $order     = $this->request->input('order') == 'desc' ? 'asc' : 'desc';
 

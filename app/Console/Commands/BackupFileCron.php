@@ -32,46 +32,58 @@ class BackupFileCron extends Command
         }
 
         \Artisan::call('config:cache');
-        Config::set('filesystems.disks.google.folderId',$result->google_drive_folder_file);
+        \Config::set('filesystems.disks.google.folderId',$result->google_drive_folder_file);
 
-        //\Log::info($result->database);
-        if(!empty(Storage::disk('backup')->files(trim($result->database)))){
+    $contents = collect(Storage::disk('google')->listContents());
+    $dir = $contents->where('type', '=', 'dir')
+    ->where('filename', '=', date('ymd'))
+    ->first();
 
-            Storage::disk('google')->makeDirectory(date('ymd'), 0775, true);
+    if ( ! $dir) {
+        Storage::disk('google')->makeDirectory(date('ymd'), 0775, true);
+    }
 
 
 
-            foreach(Storage::disk('backup')->files(trim($result->database)) as $file){
+    $contents = collect(Storage::disk('google')->listContents());
+    $dir = $contents->where('type', '=', 'dir')
+    ->where('filename', '=', date('ymd'))
+    ->first();
 
 
-                $file_extension = explode('.',$file);
+    if(!empty(Storage::disk('backup')->files(trim($result->database)))){
 
-                if(substr($file_extension[1],0,4) == 'part'){
+        foreach(Storage::disk('backup')->files(trim($result->database)) as $file){
 
-                $file_store = Storage::disk('backup')->get($file);
-                Storage::disk('google')->put(basename($file),$file_store);
 
-                $size_google_drive = Storage::disk('google')->size(basename($file));
+            $file_extension = explode('.',$file);
 
-                $size_local = Storage::disk('backup')->size($file);
+            if(substr($file_extension[1],0,4) == 'part'){
 
-                while(true){
-                    if($size_google_drive == $size_local){
-                        Storage::disk('backup')->delete($file);
-                        break;
-                    }else{
-                        //\Log::info('Tamanho do arquivo diferente.');
-                    }
+            $file_store = Storage::disk('backup')->get($file);
+            Storage::disk('google')->put($dir['path'].'/'.basename($file),$file_store);
+
+            $size_google_drive = Storage::disk('google')->size($dir['path'].'/'.basename($file));
+
+            $size_local = Storage::disk('backup')->size($file);
+
+            while(true){
+                if($size_google_drive == $size_local){
+                    Storage::disk('backup')->delete($file);
+                    break;
+                }else{
+                    //\Log::info('Tamanho do arquivo diferente.');
                 }
-
-                }
+            }
 
             }
 
         }
 
+    }
 
-        }
+}
+
 
     //\Log::info('terminou o envio para o drive');
 
