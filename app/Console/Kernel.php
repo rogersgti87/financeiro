@@ -36,7 +36,7 @@ class Kernel extends ConsoleKernel
         //$schedule->command('generateinvoicestatus:cron')->everyMinute();
         $schedule->command('rememberinvoice:cron')->dailyAt('9:20');
         $schedule->command('backupsql:cron')->everyFiveMinutes();
-        $schedule->command('backupfile:cron')->everyFiveMinutes();
+        $schedule->command('backupfile:cron')->twiceMonthly(1, 16, '3:00');
         $schedule->command('removebackupsql:cron')->dailyAt('1:00');
 
     }
