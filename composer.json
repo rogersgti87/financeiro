@@ -19,6 +19,7 @@
         "laravel/ui": "^3.0",
         "nao-pon/flysystem-google-drive": "~1.1",
         "socialiteproviders/google": "^4.1",
+        "tymon/jwt-auth": "^1.0@dev",
         "webmasterdro/paghiper-php-sdk": "3.0"
     },
     "require-dev": {
