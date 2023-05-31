@@ -141,7 +141,12 @@ class CustomerController extends Controller
         $model->payment_method  = $result['payment_method'];
         $model->created_at      = Carbon::now();
         $model->updated_at      = Carbon::now();
-        $model->notification_whatsapp = $result['notification_whatsapp'];
+
+        if (isset($result['notification_whatsapp'])) {
+            $model->notification_whatsapp      = $result['notification_whatsapp'];
+        } else {
+            $model->notification_whatsapp      = 'n';
+        }
 
         try {
             $model->save();
@@ -319,7 +324,12 @@ class CustomerController extends Controller
         $model->state           = $result['state'];
         $model->phone           = removeEspeciais($result['phone']);
         $model->payment_method  = $result['payment_method'];
-        $model->notification_whatsapp = $result['notification_whatsapp'];
+
+        if (isset($result['notification_whatsapp'])) {
+            $model->notification_whatsapp      = $result['notification_whatsapp'];
+        } else {
+            $model->notification_whatsapp      = 'n';
+        }
 
         try {
             $model->save();
