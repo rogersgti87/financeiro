@@ -31,7 +31,7 @@ class Invoice extends Model
 
 
         $invoice = DB::table('invoices as i')
-                    ->select('i.id','c.email','c.email2','c.name','c.document','c.phone','c.address','c.number','c.complement',
+                    ->select('i.id','c.email','c.email2','c.name','c.document','c.phone','c.notification_whatsapp','c.address','c.number','c.complement',
                     'c.district','c.city','c.state','c.cep','s.id as service_id','s.name as service_name','i.price as service_price',
                     DB::raw("DATEDIFF (i.date_end,i.date_invoice) as days_due_date"))
                     ->join('customer_services as cs','i.customer_service_id','cs.id')
@@ -91,7 +91,7 @@ class Invoice extends Model
     public static function generatePixPayment($invoice_id){
 
       $invoice = DB::table('invoices as i')
-      ->select('i.id','c.email','c.email2','c.name','c.document','c.phone','c.address','c.number','c.complement','c.district','c.city','c.state','c.cep','s.id as service_id','s.name as service_name','i.price as service_price')
+      ->select('i.id','c.email','c.email2','c.name','c.document','c.phone','c.address','c.number','c.notification_whatsapp','c.complement','c.district','c.city','c.state','c.cep','s.id as service_id','s.name as service_name','i.price as service_price')
       ->join('customer_services as cs','i.customer_service_id','cs.id')
       ->join('customers as c','cs.customer_id','c.id')
       ->join('services as s','cs.service_id','s.id')

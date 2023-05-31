@@ -38,5 +38,7 @@ Route::group([
 
 
     Route::middleware('auth:api')->get('/users',[UserController::class ,'index']);
+
     Route::middleware('auth:api')->get('/customers',[CustomerController::class ,'index']);
+    Route::middleware('auth:api')->get('/customer/{id}',[CustomerController::class ,'show']);
 

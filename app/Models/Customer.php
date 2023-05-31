@@ -23,6 +23,7 @@ class Customer extends Model
         'state',
         'phone',
         'payment_method',
+        'notification_whatsapp',
     ];
 
 

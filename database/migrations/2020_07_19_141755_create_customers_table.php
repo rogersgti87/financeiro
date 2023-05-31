@@ -29,6 +29,7 @@ class CreateCustomersTable extends Migration
             $table->string('state')->nullable();
             $table->string('phone');
             $table->string('payment_method');
+            $table->char('notification_whatsapp')->default('s');
             $table->timestamps();
         });
     }

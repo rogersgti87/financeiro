@@ -141,6 +141,7 @@ class CustomerController extends Controller
         $model->payment_method  = $result['payment_method'];
         $model->created_at      = Carbon::now();
         $model->updated_at      = Carbon::now();
+        $model->notification_whatsapp = $result['notification_whatsapp'];
 
         try {
             $model->save();
@@ -318,6 +319,7 @@ class CustomerController extends Controller
         $model->state           = $result['state'];
         $model->phone           = removeEspeciais($result['phone']);
         $model->payment_method  = $result['payment_method'];
+        $model->notification_whatsapp = $result['notification_whatsapp'];
 
         try {
             $model->save();

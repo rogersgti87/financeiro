@@ -113,7 +113,7 @@ class InvoiceNotification extends Model
         if(isset($data['text_remember']) && $data['text_remember'] != null){
             $data['text_whatsapp'] .= "$whats_text_remember *Fatura #$whats_invoice_id* \n\n";
         }else{
-            $data['text_whatsapp'] .= "Esta é uma mensagem para notificá-lo(a) que foi gerado a *Fatura #$whats_invoice_id* \n\n";
+            $data['text_whatsapp'] .= "Esta é uma mensagem para notificá-lo(a) que foi gerada a *Fatura #$whats_invoice_id* \n\n";
         }
         $data['text_whatsapp'] .= "*Serviço(s) Contratado(s):* \n\n";
         $data['text_whatsapp'] .= "$whats_description \n\n";
@@ -129,7 +129,9 @@ class InvoiceNotification extends Model
             $data['text_whatsapp'] .= "$whats_billet_url_slip\n\n";
         }
 
-        if($data['customer_phone'] != null){
+        $data['text_whatsapp'] .= "*Linha Digitável abaixo* \n\n";
+
+        if($data['notification_whatsapp'] == 's'){
 
         $response = Http::withHeaders([
             "Content-Type"  => "application/json",
@@ -318,7 +320,7 @@ class InvoiceNotification extends Model
         $data['text_whatsapp'] .= "*Total:* R$ $whats_price \n\n";
 
 
-        if($data['customer_phone'] != null){
+        if($data['notification_whatsapp'] == 's'){
             $response = Http::withHeaders([
                 "Content-Type"  => "application/json",
                 "SecretKey"     =>  $config->api_brasil_secret_key,

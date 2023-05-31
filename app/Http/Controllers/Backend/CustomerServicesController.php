@@ -216,6 +216,7 @@ class CustomerServicesController extends Controller
             'customer_email'            => $getCustomer->email,
             'customer_email2'           => $getCustomer->email2,
             'customer_phone'            => $getCustomer->phone,
+            'notification_whatsapp'     => $getCustomer->notification_whatsapp,
             'company'                   => $getCustomer->company,
             'data_fatura'               => date('d/m/Y', strtotime($invoice->date_invoice)),
             'data_vencimento'           => date('d/m/Y', strtotime($invoice->date_end)),

@@ -122,7 +122,7 @@ class InvoicesController extends Controller
 
 
     $cs  = DB::table('customer_services as cs')
-            ->select('cs.id','cs.dominio','s.name','cs.period','c.name as customer_name',
+            ->select('cs.id','cs.dominio','s.name','cs.period','c.name as customer_name','c.notification_whatsapp',
             'c.email','c.email2','c.phone','c.company')
             ->join('services as s','cs.service_id','s.id')
             ->join('customers as c','cs.customer_id','c.id')
@@ -214,6 +214,7 @@ class InvoicesController extends Controller
             'customer_email'            => $cs->email,
             'customer_email2'           => $cs->email2,
             'customer_phone'            => $cs->phone,
+            'notification_whatsapp'     => $cs->notification_whatsapp,
             'company'                   => $cs->company,
             'data_fatura'               => date('d/m/Y', strtotime($invoice->date_invoice)),
             'data_vencimento'           => date('d/m/Y', strtotime($invoice->date_end)),
@@ -353,7 +354,7 @@ class InvoicesController extends Controller
     try {
 
         $invoice = DB::table('invoices as i')
-                ->select('i.id','i.date_invoice','i.date_end','i.description','c.email','c.email2','c.name','c.company','c.document','c.phone','c.address','c.number','c.complement',
+                ->select('i.id','i.date_invoice','i.date_end','i.description','c.email','c.email2','c.name','c.notification_whatsapp','c.company','c.document','c.phone','c.address','c.number','c.complement',
                 'c.district','c.city','c.state','c.cep','i.payment_method','s.id as service_id','s.name as service_name','i.price as service_price','cs.dominio','i.date_payment')
                 ->join('customer_services as cs','i.customer_service_id','cs.id')
                 ->join('customers as c','cs.customer_id','c.id')
@@ -369,6 +370,7 @@ class InvoicesController extends Controller
             'customer_email'            => $invoice->email,
             'customer_email2'           => $invoice->email2,
             'customer_phone'            => $invoice->phone,
+            'notification_whatsapp'     => $invoice->notification_whatsapp,
             'company'                   => $invoice->company,
             'data_fatura'               => date('d/m/Y', strtotime($invoice->date_invoice)),
             'data_vencimento'           => date('d/m/Y', strtotime($invoice->date_end)),
