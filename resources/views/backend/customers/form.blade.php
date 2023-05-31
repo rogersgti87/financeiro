@@ -42,22 +42,10 @@
       <div class="form-group">
         <label for="status">Status:</label>
         @if(isset($result->status))
-        @if($result->status == 'ativo')
         <div class="custom-control custom-switch checked-success">
-          <input type="checkbox" class="custom-control-input" name="status" id="status" value="ativo" checked>
+          <input type="checkbox" class="custom-control-input" name="status" id="status" value="ativo" {{ $result->status == 'ativo' ? 'checked' : '' }}>
           <label class="custom-control-label" for="status" checked>Ativo</label>
         </div>
-        @elseif($result->status == 'pendente')
-        <div class="custom-control custom-switch checked-info">
-          <input type="checkbox" class="custom-control-input" name="status" id="status" value="pendente">
-          <label class="custom-control-label" for="status">Pendente</label>
-        </div>
-        @else
-        <div class="custom-control custom-switch checked-danger">
-          <input type="checkbox" class="custom-control-input" name="status" id="status" value="cancelado">
-          <label class="custom-control-label" for="status">Cancelado</label>
-        </div>
-        @endif
         @else
         <div class="custom-control custom-switch checked-success">
           <input type="checkbox" class="custom-control-input" name="status" id="status" value="ativo" checked>
@@ -71,17 +59,10 @@
         <div class="form-group">
           <label for="notification_whatsapp">Notificar Whatsapp:</label>
           @if(isset($result->notification_whatsapp))
-          @if($result->notification_whatsapp == 's')
           <div class="custom-control custom-switch checked-success">
-            <input type="checkbox" class="custom-control-input" name="notification_whatsapp" id="notification_whatsapp" value="s" checked>
+            <input type="checkbox" class="custom-control-input" name="notification_whatsapp" id="notification_whatsapp" value="s" {{ $result->notification_whatsapp == 's' ? 'checked' : ''}} >
             <label class="custom-control-label" for="notification_whatsapp" checked>Sim</label>
           </div>
-          @else
-          <div class="custom-control custom-switch checked-info">
-            <input type="checkbox" class="custom-control-input" name="notification_whatsapp" id="notification_whatsapp" value="n">
-            <label class="custom-control-label" for="notification_whatsapp">Não</label>
-          </div>
-          @endif
           @else
           <div class="custom-control custom-switch checked-success">
             <input type="checkbox" class="custom-control-input" name="notification_whatsapp" id="notification_whatsapp" value="s" checked>
