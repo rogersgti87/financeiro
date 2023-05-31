@@ -76,7 +76,7 @@
             <input type="checkbox" class="custom-control-input" name="notification_whatsapp" id="notification_whatsapp" value="s" checked>
             <label class="custom-control-label" for="notification_whatsapp" checked>Sim</label>
           </div>
-          @elseif($result->notification_whatsapp == 'n')
+          @else
           <div class="custom-control custom-switch checked-info">
             <input type="checkbox" class="custom-control-input" name="notification_whatsapp" id="notification_whatsapp" value="n">
             <label class="custom-control-label" for="notification_whatsapp">Não</label>
