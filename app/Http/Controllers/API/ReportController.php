@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use DB;
 
-class CustomerController extends Controller
+class ReportController extends Controller
 {
 
     public function index(Request $request)
