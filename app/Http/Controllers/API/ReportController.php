@@ -18,7 +18,7 @@ class ReportController extends Controller
         $getInvoicesDues    = DB::table('invoices')->where('status', 'nao_pago')->count();
 
 
-        return response()->json(['customers' => $customers, 'total_money_month' => $getTotalMoneyMonth, 'invoices_dues' => $getInvoicesDues], 200);
+        return response()->json(['customers' => $customers, 'total_money_month' => number_format($getTotalMoneyMonth,2,',','.'), 'invoices_dues' => $getInvoicesDues], 200);
     }
 
 
