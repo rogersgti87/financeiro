@@ -16,9 +16,9 @@ class Kernel extends ConsoleKernel
         commands\GenerateInvoiceCron::class,
         //commands\VerifyInvoiceStatusCron::class,
         commands\RememberInvoiceCron::class,
-        commands\BackupSQLCron::class,
-        commands\BackupFileCron::class,
-        commands\RemoveBackupSQLCron::class,
+        //commands\BackupSQLCron::class,
+        //commands\BackupFileCron::class,
+        //commands\RemoveBackupSQLCron::class,
 
     ];
 
@@ -35,9 +35,9 @@ class Kernel extends ConsoleKernel
         $schedule->command('generateinvoice:cron')->dailyAt('9:20');
         //$schedule->command('generateinvoicestatus:cron')->everyMinute();
         $schedule->command('rememberinvoice:cron')->dailyAt('9:20');
-        $schedule->command('backupsql:cron')->everyFiveMinutes();
-        $schedule->command('backupfile:cron')->twiceMonthly(1, 16, '3:00');
-        $schedule->command('removebackupsql:cron')->dailyAt('1:00');
+        //$schedule->command('backupsql:cron')->everyFiveMinutes();
+        //$schedule->command('backupfile:cron')->twiceMonthly(1, 16, '3:00');
+        //$schedule->command('removebackupsql:cron')->dailyAt('1:00');
 
     }
 
