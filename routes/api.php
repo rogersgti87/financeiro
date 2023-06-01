@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\CustomerController;
+use App\Http\Controllers\API\ReportController;
 use App\Http\Controllers\API\AuthController;
 
 /*
@@ -41,4 +42,6 @@ Route::group([
 
     Route::middleware('auth:api')->get('/customers',[CustomerController::class ,'index']);
     Route::middleware('auth:api')->get('/customer/{id}',[CustomerController::class ,'show']);
+
+    Route::middleware('auth:api')->get('/reports',[ReportController::class ,'index']);
 
