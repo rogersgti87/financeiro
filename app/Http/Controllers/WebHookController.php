@@ -145,6 +145,9 @@ class WebHookController extends Controller
     //\Log::info($data);
 
 
+    if($data != null){
+
+
     foreach ($data['data'] as $result){
 
         \Log::info($result['body']);
@@ -168,7 +171,7 @@ class WebHookController extends Controller
         }
 
     }
-
+    }
 
 
 
