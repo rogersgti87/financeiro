@@ -147,8 +147,7 @@ class WebHookController extends Controller
 
     foreach ($data['data'] as $result){
 
-        \Log::info($result);
-        if($result->body == 'teste'){
+        if($result['body'] == 'teste'){
 
             $response = Http::withHeaders([
                 "Content-Type"  => "application/json",
@@ -157,8 +156,8 @@ class WebHookController extends Controller
                 "DeviceToken"   =>  $config->api_brasil_device_token
             ])->withToken($config->api_brasil_bearer_token)
             ->post($config->api_brasil_host.'/whatsapp/sendText',[
-                "number" => $result->to,
-                "text"   => 'Olá ,'. $result->sender->shortName.'\n Você digitou a palavara '.$result->body
+                "number" => $result['to'],
+                "text"   => 'Olá ,'. $result['sender']['shortName'].'\n Você digitou a palavara '.$result['body']
             ]);
 
             $result = $response->getBody();
