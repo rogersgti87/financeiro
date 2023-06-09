@@ -145,24 +145,30 @@ class WebHookController extends Controller
     //\Log::info($data);
 
 
+    foreach ($data as $result){
 
-    if($data['body'] == 'teste'){
 
-        $response = Http::withHeaders([
-            "Content-Type"  => "application/json",
-            "SecretKey"     =>  $config->api_brasil_secret_key,
-            "PublicToken"   =>  $config->api_brasil_public_token,
-            "DeviceToken"   =>  $config->api_brasil_device_token
-        ])->withToken($config->api_brasil_bearer_token)
-        ->post($config->api_brasil_host.'/whatsapp/sendText',[
-            "number" => $data['to'],
-            "text"   => 'Olá ,'. $data['sender']['shortName'].'\n Você digitou a palavara '.$data['body']
-        ]);
+        if($result['data']['body'] == 'teste'){
 
-        $result = $response->getBody();
+            $response = Http::withHeaders([
+                "Content-Type"  => "application/json",
+                "SecretKey"     =>  $config->api_brasil_secret_key,
+                "PublicToken"   =>  $config->api_brasil_public_token,
+                "DeviceToken"   =>  $config->api_brasil_device_token
+            ])->withToken($config->api_brasil_bearer_token)
+            ->post($config->api_brasil_host.'/whatsapp/sendText',[
+                "number" => $result['data']['to'],
+                "text"   => 'Olá ,'. $result['data']['sender']['shortName'].'\n Você digitou a palavara '.$result['data']['body']
+            ]);
 
+            $result = $response->getBody();
+
+
+        }
 
     }
+
+
 
 
   }
