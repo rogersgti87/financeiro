@@ -18,7 +18,7 @@ Route::prefix('webhook')->group(function () {
     Route::post('sendpulse-smtp', [WebHookController::class,'index']);
     Route::post('paghiper', [WebHookController::class,'paghiper']);
     Route::get('backups/{user}', [WebHookController::class,'backups']);
-    Route::get('whatsapp-messages', [WebHookController::class,'whatsappmessage']);
+    Route::post('whatsapp-messages', [WebHookController::class,'whatsappmessage']);
 });
 
 /************************/
