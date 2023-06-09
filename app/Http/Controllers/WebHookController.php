@@ -142,47 +142,35 @@ class WebHookController extends Controller
     $config = DB::table('configs')->where('id',1)->first();
 
     $data = $request->all();
-    //\Log::info($data);
-
 
     if($data != null){
 
+    foreach ($data as $result){
 
-        \Log::info($data['data'][0]);
+        //dd($result['data']['body'], $result['data']['sender']['shortName']);
 
-        if($data['data'][0]['body'] == 'teste'){
+        if($result['data']['body'] == 'Teste'){
 
-            \Log::info(preg_replace('/[^0-9]/', '', $data['data']['to']));
-            \Log::info($data['data'][0]['body']);
-            \Log::info(print_r($data['data'][0]['sender']['shortName']));
+            //\Log::info(preg_replace('/[^0-9]/', '', $result['to']));
+            //\Log::info($result['body']);
+            //\Log::info(print_r($result['sender']['shortName']));
 
-    // foreach ($data['data'] as $result){
+            $response = Http::withHeaders([
+                "Content-Type"  => "application/json",
+                "SecretKey"     =>  $config->api_brasil_secret_key,
+                "PublicToken"   =>  $config->api_brasil_public_token,
+                "DeviceToken"   =>  $config->api_brasil_device_token
+            ])->withToken($config->api_brasil_bearer_token)
+            ->post($config->api_brasil_host.'/whatsapp/sendText',[
+                "number" => preg_replace('/[^0-9]/', '', $result['data']['to']),
+                "text"   => 'Olá ,'. $result['data']['sender']['shortName'].'\n Você digitou a palavara '.$result['data']['body']
+            ]);
 
-    //     \Log::info($result);
-
-    //     if($result['body'] == 'teste'){
-
-    //         \Log::info(preg_replace('/[^0-9]/', '', $result['to']));
-    //         \Log::info($result['body']);
-    //         \Log::info(print_r($result['sender']['shortName']));
-
-    //         // $response = Http::withHeaders([
-    //         //     "Content-Type"  => "application/json",
-    //         //     "SecretKey"     =>  $config->api_brasil_secret_key,
-    //         //     "PublicToken"   =>  $config->api_brasil_public_token,
-    //         //     "DeviceToken"   =>  $config->api_brasil_device_token
-    //         // ])->withToken($config->api_brasil_bearer_token)
-    //         // ->post($config->api_brasil_host.'/whatsapp/sendText',[
-    //         //     "number" => $result['to'],
-    //         //     "text"   => 'Olá ,'. $result['sender']['shortName'].'\n Você digitou a palavara '.$result['body']
-    //         // ]);
-
-    //         // $result = $response->getBody();
+            $result = $response->getBody();
 
 
-    //     }
+        }
 
-    // }
     }
 
     }
