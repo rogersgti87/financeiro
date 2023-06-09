@@ -138,8 +138,32 @@ class WebHookController extends Controller
   }
 
   public function whatsappMessage(Request $request){
+
+    $config = DB::table('configs')->where('id',1)->first();
+
     $data = $request->all();
-    \Log::info($data);
+    //\Log::info($data);
+
+
+
+    if($data['data']['body'] == 'teste'){
+
+        $response = Http::withHeaders([
+            "Content-Type"  => "application/json",
+            "SecretKey"     =>  $config->api_brasil_secret_key,
+            "PublicToken"   =>  $config->api_brasil_public_token,
+            "DeviceToken"   =>  $config->api_brasil_device_token
+        ])->withToken($config->api_brasil_bearer_token)
+        ->post($config->api_brasil_host.'/whatsapp/sendText',[
+            "number" => $data['data']['to'],
+            "text"   => 'Olá ,'. $data['data']['sender']['shortName'].'\n Você digitou a palavara '.$data['data']['body']
+        ]);
+
+        $result = $response->getBody();
+
+
+    }
+
 
   }
 
