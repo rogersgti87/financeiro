@@ -148,6 +148,7 @@ class WebHookController extends Controller
     foreach ($data as $result){
 
         //dd($result['data']['body'], $result['data']['sender']['shortName']);
+        \Log::info($result['data']['body']);
 
         if($result['data']['body'] == 'Teste'){
 
