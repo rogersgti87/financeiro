@@ -152,8 +152,7 @@ class WebHookController extends Controller
 
         \Log::info($result['to']);
         \Log::info($result['body']);
-        \Log::info($result['sender']);
-        \Log::info($result['sender']['shortName']);
+        \Log::info(print_r($result['sender']['shortName']));
 
         // if($result['body'] == 'teste'){
 
