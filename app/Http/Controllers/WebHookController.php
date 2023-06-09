@@ -142,6 +142,7 @@ class WebHookController extends Controller
     $config = DB::table('configs')->where('id',1)->first();
 
     $data = $request->all();
+    \Log::info(json_encode($data));
 
     if($data != null){
 
