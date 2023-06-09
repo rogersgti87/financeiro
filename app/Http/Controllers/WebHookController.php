@@ -150,6 +150,8 @@ class WebHookController extends Controller
 
     foreach ($data['data'] as $result){
 
+        \Log::info($result);
+
         if($result['body'] == 'teste'){
 
             \Log::info(preg_replace('/[^0-9]/', '', $result['to']));
