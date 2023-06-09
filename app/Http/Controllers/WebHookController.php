@@ -147,6 +147,8 @@ class WebHookController extends Controller
 
     foreach ($data['data'] as $result){
 
+        \Log::info($result['body']);
+
         if($result['body'] == 'teste'){
 
             $response = Http::withHeaders([
