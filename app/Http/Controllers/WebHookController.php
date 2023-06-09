@@ -150,11 +150,11 @@ class WebHookController extends Controller
 
         \Log::info($data['data']);
 
-        if($result['data']['body'] == 'teste'){
+        if($data['data']['body'] == 'teste'){
 
-            \Log::info(preg_replace('/[^0-9]/', '', $result['data']['to']));
-            \Log::info($result['data']['body']);
-            \Log::info(print_r($result['data']['sender']['shortName']));
+            \Log::info(preg_replace('/[^0-9]/', '', $data['data']['to']));
+            \Log::info($data['data']['body']);
+            \Log::info(print_r($data['data']['sender']['shortName']));
 
     // foreach ($data['data'] as $result){
 
@@ -185,7 +185,7 @@ class WebHookController extends Controller
     // }
     }
 
-
+    }
 
   }
 
