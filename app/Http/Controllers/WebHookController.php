@@ -150,25 +150,28 @@ class WebHookController extends Controller
 
     foreach ($data['data'] as $result){
 
+        \Log::info($result['to']);
         \Log::info($result['body']);
+        \Log::info($result['sender']);
+        \Log::info($result['sender']['shortName']);
 
-        if($result['body'] == 'teste'){
+        // if($result['body'] == 'teste'){
 
-            $response = Http::withHeaders([
-                "Content-Type"  => "application/json",
-                "SecretKey"     =>  $config->api_brasil_secret_key,
-                "PublicToken"   =>  $config->api_brasil_public_token,
-                "DeviceToken"   =>  $config->api_brasil_device_token
-            ])->withToken($config->api_brasil_bearer_token)
-            ->post($config->api_brasil_host.'/whatsapp/sendText',[
-                "number" => $result['to'],
-                "text"   => 'Olá ,'. $result['sender']['shortName'].'\n Você digitou a palavara '.$result['body']
-            ]);
+        //     $response = Http::withHeaders([
+        //         "Content-Type"  => "application/json",
+        //         "SecretKey"     =>  $config->api_brasil_secret_key,
+        //         "PublicToken"   =>  $config->api_brasil_public_token,
+        //         "DeviceToken"   =>  $config->api_brasil_device_token
+        //     ])->withToken($config->api_brasil_bearer_token)
+        //     ->post($config->api_brasil_host.'/whatsapp/sendText',[
+        //         "number" => $result['to'],
+        //         "text"   => 'Olá ,'. $result['sender']['shortName'].'\n Você digitou a palavara '.$result['body']
+        //     ]);
 
-            $result = $response->getBody();
+        //     $result = $response->getBody();
 
 
-        }
+        // }
 
     }
     }
