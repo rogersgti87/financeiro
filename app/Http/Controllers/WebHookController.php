@@ -137,5 +137,11 @@ class WebHookController extends Controller
 
   }
 
+  public function whatsappMessage(Request $request){
+    $data = $request->all();
+    Log::info($data);
+
+  }
+
 
 }
