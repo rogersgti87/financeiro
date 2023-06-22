@@ -99,6 +99,7 @@ class InvoiceNotification extends Model
         $whats_price                    = $data['price'];
         $whats_payment_method           = $data['payment_method'];
         $whats_pix_emv                  = $data['pix_emv'];
+        $whats_pix_image                = $data['pix_qrcode_image_url'];
         $whats_billet_digitable_line    = $data['billet_digitable_line'];
         $whats_billet_url_slip          = $data['billet_url_slip'];
 
@@ -172,6 +173,7 @@ class InvoiceNotification extends Model
         $data['text_whatsapp_payment'] = '';
 
         if($whats_payment_method == 'Pix'){
+            $data['text_whatsapp_payment'] .= "<img src='data:image/jpeg;base64, $whats_pix_image' alt='QR Code' style='max-width:220px;'>\n\n";
             $data['text_whatsapp_payment'] .= "$whats_pix_emv\n\n";
         }else{
             $whats_billet_digitable_line = removeEspeciais($whats_billet_digitable_line);

@@ -237,8 +237,7 @@ class InvoicesController extends Controller
             $details['billet_url_slip']       = $getInfoBilletPayment->status_request->bank_slip->url_slip;
         }else{
 
-            $details['pix_qrcode_image_url']  = '<img src="data:image/jpeg;base64,'.$getInfoPixPayment->qr_code_base64.'" alt="QR Code" style="max-width:220px;">';
-            //$details['pix_qrcode_image_url']  = $getInfoPixPayment->qr_code_base64;
+            $details['pix_qrcode_image_url']  = $getInfoPixPayment->qr_code_base64;
             $details['pix_emv']               = $getInfoPixPayment->qr_code;
         }
 
