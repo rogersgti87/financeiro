@@ -103,7 +103,7 @@ class Invoice extends Model
         \MercadoPago\SDK::setAccessToken('APP_USR-6577696952434644-080712-6d90a29d25117994829ffa1c31f661fe-74837694');
 
         $payment = new \MercadoPago\Payment();
-        $payment->transaction_amount = bcmul($invoice->service_price,100);
+        $payment->transaction_amount = $invoice->service_price;
         $payment->statement_descriptor = 'ROGERTI';
         $payment->description = $invoice->service_name;
         $payment->payment_method_id = "pix";
