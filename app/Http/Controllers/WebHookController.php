@@ -179,7 +179,7 @@ class WebHookController extends Controller
         InvoiceNotification::sendNotificationConfirm($details);
 
 
-    }else if($data['status'] == 'canceled'){
+    }else if($payment->status == 'cancelled'){
         Invoice::where('id',$invoice->id)->update([
             'status'       =>   'cancelado',
             'date_payment' =>   Null,
