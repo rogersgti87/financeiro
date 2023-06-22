@@ -170,10 +170,54 @@ class InvoiceNotification extends Model
             'updated_at'        => Carbon::now()
         ]);
 
-        $data['text_whatsapp_payment'] = '';
+
+        //Enviar imagem qrcode pix
 
         if($whats_payment_method == 'Pix'){
-            $data['text_whatsapp_payment'] .= "<img src='data:image/jpeg;base64, $whats_pix_image' alt='QR Code' style='max-width:220px;'>\n\n";
+
+            $response = Http::withHeaders([
+                "Content-Type"  => "application/json",
+                "SecretKey"     =>  $config->api_brasil_secret_key,
+                "PublicToken"   =>  $config->api_brasil_public_token,
+                "DeviceToken"   =>  $config->api_brasil_device_token
+            ])->withToken($config->api_brasil_bearer_token)
+            ->post($config->api_brasil_host.'/whatsapp/send-image',[
+                "number" => '55'.$data['customer_phone'],
+                "base64"   => $whats_pix_image
+            ]);
+
+            $result = $response->getBody();
+
+            $whats_status           = json_decode($result)->error;
+            if($whats_status == false){
+                $whats_message_status   = json_decode($result)->message;
+                $whats_message          = json_encode(json_decode($result)->response);
+            }else{
+                $whats_message_status   = json_encode(json_decode($result)->message);
+                $whats_message          = '';
+            }
+
+
+            DB::table('invoice_notifications')->insert([
+                'invoice_id'        => $data['invoice_id'],
+                'type_send'         => 'whatsapp',
+                'date'              => Carbon::now(),
+                'subject_whatsapp'  => $data['title'],
+                'senpulse_email_id' => '',
+                'status'            => $whats_status == true ? 'Error' : 'Success',
+                'message_status'    => $whats_message_status,
+                'message'           => $whats_message,
+                'created_at'        => Carbon::now(),
+                'updated_at'        => Carbon::now()
+            ]);
+
+        }
+            //Fim imagem qrcode pix
+
+            $data['text_whatsapp_payment'] = '';
+
+        if($whats_payment_method == 'Pix'){
+            $data['text_whatsapp_payment'] .= "$whats_pix_image\n\n";
             $data['text_whatsapp_payment'] .= "$whats_pix_emv\n\n";
         }else{
             $whats_billet_digitable_line = removeEspeciais($whats_billet_digitable_line);
