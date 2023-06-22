@@ -54,7 +54,7 @@
     @if($payment_method == 'Pix')
 
         <p style="text-align:center">Se ainda não realizou o pagamento, ainda dá tempo, basta scannear o QrCode a baixo:</p>
-        <p style="text-align:center"><img src="{{ $pix_qrcode_image_url }}"></p>
+        <p style="text-align:center"><img src="data:image/jpeg;base64,{{ $pix_qrcode_image_url }}" style="max-width:220px;"></p>
         <p style="text-align:center">Código digitavel pix :</p>
         <p style="text-align:center">{{$pix_emv}}</p>
 

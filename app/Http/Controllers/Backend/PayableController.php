@@ -36,6 +36,13 @@ class PayableController extends Controller
   public function index()
   {
 
+
+    \MercadoPago\SDK::setAccessToken('APP_USR-6577696952434644-080712-6d90a29d25117994829ffa1c31f661fe-74837694');
+
+    $payment = \MercadoPago\Payment::find_by_id('59730011182');
+
+    dd($payment->point_of_interaction->transaction_data->qr_code);
+
         $column    = $this->request->input('column');
         $order     = $this->request->input('order') == 'desc' ? 'asc' : 'desc';
 
