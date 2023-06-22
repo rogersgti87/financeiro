@@ -131,10 +131,12 @@ class WebHookController extends Controller
 
     \Log::info($request->all());
 
-    $invoice = Invoice::where('transaction_id',$data['id'])->where('status','nao_pago')->first();
+    $invoice = Invoice::where('transaction_id',$data['data']['id'])->where('status','nao_pago')->first();
 
-    if($data['status'] == 'approved'){
-        Invoice::where('transaction_id',$data['id'])->update([
+    $payment = \MercadoPago\Payment::find_by_id($invoice->transaction_id);
+
+    if($payment->status == 'approved'){
+        Invoice::where('id',$invoice->id)->update([
             'status'       =>   'pago',
             'date_payment' =>   Carbon::now(),
             'updated_at'   =>   Carbon::now()
@@ -148,7 +150,6 @@ class WebHookController extends Controller
         ->join('customers as c','cs.customer_id','c.id')
         ->join('services as s','cs.service_id','s.id')
         ->where('i.id',$invoice->id)
-        ->where('transaction_id',$data['id'])
         ->first();
 
         $details = [
@@ -178,7 +179,7 @@ class WebHookController extends Controller
 
 
     }else if($data['status'] == 'canceled'){
-        Invoice::where('transaction_id',$data['id'])->update([
+        Invoice::where('id',$invoice->id)->update([
             'status'       =>   'cancelado',
             'date_payment' =>   Null,
             'updated_at'   =>   Carbon::now()
