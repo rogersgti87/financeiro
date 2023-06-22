@@ -51,11 +51,7 @@ class WebHookController extends Controller
 
     if($invoice != null){
 
-    if($invoice->payment_method == 'Pix'){
-        $url = 'https://pix.paghiper.com/invoice/notification/';
-    }else{
         $url = 'https://api.paghiper.com/transaction/notification/';
-    }
 
     $response = Http::withHeaders([
         'accept' => 'application/json',
