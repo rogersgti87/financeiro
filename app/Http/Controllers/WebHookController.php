@@ -129,6 +129,25 @@ class WebHookController extends Controller
   }
 
 
+  public function mercadopago(Request $request){
+
+    \Log::info($request->all());
+
+    //\MercadoPago\SDK::setAccessToken('APP_USR-6577696952434644-080712-6d90a29d25117994829ffa1c31f661fe-74837694');
+
+    // $payment = \MercadoPago\Payment::find_by_id($item->preference_id);
+
+    // if($payment && $payment->status == 'pending'){
+    //     $item->mp_qr_code = $payment->point_of_interaction->transaction_data->qr_code;
+    //     $item->mp_qr_code_base64 = $payment->point_of_interaction->transaction_data->qr_code_base64;
+    //     $item->date_of_expiration = $payment->date_of_expiration;
+    // }else if($payment->status == 'cancelled' && $item->status == 1 && $item->pay == 0){
+    //     $item->preference_id = '';
+    //     $item->save();
+    // }
+
+  }
+
   public function backups(Request $request,$user){
     $data = $request->all();
     if($data['token'] == 'abc,1234'){
@@ -139,45 +158,45 @@ class WebHookController extends Controller
 
   public function whatsappMessage(Request $request){
 
-    $config = DB::table('configs')->where('id',1)->first();
+    // $config = DB::table('configs')->where('id',1)->first();
 
-    $data = $request->all();
-    \Log::info(json_encode($data));
+    // $data = $request->all();
+    // \Log::info(json_encode($data));
 
-    if($data != null){
+    // if($data != null){
 
-    foreach ($data as $result){
+    // foreach ($data as $result){
 
-        //dd($result['data']['body'], $result['data']['sender']['shortName']);
-        \Log::info($result['data']['body']);
+    //     //dd($result['data']['body'], $result['data']['sender']['shortName']);
+    //     \Log::info($result['data']['body']);
 
-        if($result['data']['body'] == 'Teste'){
+    //     if($result['data']['body'] == 'Teste'){
 
-            //\Log::info(preg_replace('/[^0-9]/', '', $result['to']));
-            //\Log::info($result['body']);
-            //\Log::info(print_r($result['sender']['shortName']));
+    //         //\Log::info(preg_replace('/[^0-9]/', '', $result['to']));
+    //         //\Log::info($result['body']);
+    //         //\Log::info(print_r($result['sender']['shortName']));
 
-            $response = Http::withHeaders([
-                "Content-Type"  => "application/json",
-                "SecretKey"     =>  $config->api_brasil_secret_key,
-                "PublicToken"   =>  $config->api_brasil_public_token,
-                "DeviceToken"   =>  $config->api_brasil_device_token
-            ])->withToken($config->api_brasil_bearer_token)
-            ->post($config->api_brasil_host.'/whatsapp/sendText',[
-                "number" => preg_replace('/[^0-9]/', '', $result['data']['to']),
-                "text"   => 'Olá ,'. $result['data']['sender']['shortName'].'\n Você digitou a palavara '.$result['data']['body']
-            ]);
+    //         $response = Http::withHeaders([
+    //             "Content-Type"  => "application/json",
+    //             "SecretKey"     =>  $config->api_brasil_secret_key,
+    //             "PublicToken"   =>  $config->api_brasil_public_token,
+    //             "DeviceToken"   =>  $config->api_brasil_device_token
+    //         ])->withToken($config->api_brasil_bearer_token)
+    //         ->post($config->api_brasil_host.'/whatsapp/sendText',[
+    //             "number" => preg_replace('/[^0-9]/', '', $result['data']['to']),
+    //             "text"   => 'Olá ,'. $result['data']['sender']['shortName'].'\n Você digitou a palavara '.$result['data']['body']
+    //         ]);
 
-            $result = $response->getBody();
+    //         $result = $response->getBody();
 
-            \Log::info($result);
+    //         \Log::info($result);
 
 
-        }
+    //     }
 
-    }
+    // }
 
-    }
+    // }
 
   }
 

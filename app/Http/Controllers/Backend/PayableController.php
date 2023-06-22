@@ -12,6 +12,7 @@ use DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Console\Command;
 
+
 class PayableController extends Controller
 {
   protected $model;

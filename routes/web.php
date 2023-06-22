@@ -17,6 +17,7 @@ use App\Http\Controllers\Backend\BackupController;
 Route::prefix('webhook')->group(function () {
     Route::post('sendpulse-smtp', [WebHookController::class,'index']);
     Route::post('paghiper', [WebHookController::class,'paghiper']);
+    Route::post('mercadopago', [WebHookController::class,'mercadopago']);
     Route::get('backups/{user}', [WebHookController::class,'backups']);
     Route::post('whatsapp-messages', [WebHookController::class,'whatsappmessage']);
 });

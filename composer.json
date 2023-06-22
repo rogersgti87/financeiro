@@ -17,6 +17,7 @@
         "laravel/socialite": "^5.5",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0",
+        "mercadopago/dx-php": "2.5.3",
         "nao-pon/flysystem-google-drive": "~1.1",
         "socialiteproviders/google": "^4.1",
         "tymon/jwt-auth": "^1.0@dev",

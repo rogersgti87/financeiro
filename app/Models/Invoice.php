@@ -88,7 +88,59 @@ class Invoice extends Model
 
       }
 
-    public static function generatePixPayment($invoice_id){
+
+
+      public static function generatePixPayment($invoice_id){
+
+        $invoice = DB::table('invoices as i')
+        ->select('i.id','c.email','c.email2','c.name','c.document','c.phone','c.address','c.number','c.notification_whatsapp','c.complement','c.district','c.city','c.state','c.cep','s.id as service_id','s.name as service_name','i.price as service_price')
+        ->join('customer_services as cs','i.customer_service_id','cs.id')
+        ->join('customers as c','cs.customer_id','c.id')
+        ->join('services as s','cs.service_id','s.id')
+        ->where('i.id',$invoice_id)
+        ->first();
+
+        \MercadoPago\SDK::setAccessToken('APP_USR-6577696952434644-080712-6d90a29d25117994829ffa1c31f661fe-74837694');
+
+        $payment = new \MercadoPago\Payment();
+        $payment->transaction_amount = 3.00;
+        $payment->statement_descriptor = 'ROGERTI';
+        $payment->description = $invoice->service_name;
+        $payment->payment_method_id = "pix";
+        $payment->notification_url = env('APP_URL') . '/webhook/mercadopago?source_news=webhooks';
+        $payment->external_reference = $invoice->id;
+        $payment->date_of_expiration = \Carbon\Carbon::now()->addDays(30)->format('Y-m-d\TH:i:s') . '.000-04:00';
+        $payment->payer = array(
+            "email"             => $invoice->email,
+            "first_name"        => $invoice->name,
+            "last_name"         => "",
+            "identification"    => array(
+                "type"          => "CPF",
+                "number"        => str_replace([',', '.', ' '], '', $invoice->document)
+            ),
+            "address"           =>  array()
+        );
+
+       $payment->save();
+
+       $payment_id = $payment->id ? $payment->id : '';
+
+       if($payment_id == ''){
+            return ['staus' => 'reject', 'message' => 'Erro ao Gerar Pix'];
+        }else{
+            return ['status' => 'ok', 'transaction_id' => $payment_id];
+        }
+
+       //$getPayment = \MercadoPago\Payment::find_by_id($payment_id);
+
+       //$urlImage = '<img src="data:image/jpeg;base64,'.$getPayment->point_of_interaction->transaction_data->qr_code_base64.'" alt="QR Code" style="max-width:220px;">';
+
+       //return $urlImage;
+
+      }
+
+
+    public static function generatePixPaymentPagHiper($invoice_id){
 
       $invoice = DB::table('invoices as i')
       ->select('i.id','c.email','c.email2','c.name','c.document','c.phone','c.address','c.number','c.notification_whatsapp','c.complement','c.district','c.city','c.state','c.cep','s.id as service_id','s.name as service_name','i.price as service_price')
@@ -160,6 +212,17 @@ class Invoice extends Model
     }
 
     public static function verifyStatusPixPayment($transaction_id){
+
+    \MercadoPago\SDK::setAccessToken('APP_USR-6577696952434644-080712-6d90a29d25117994829ffa1c31f661fe-74837694');
+
+    $payment = \MercadoPago\Payment::find_by_id($transaction_id);
+
+    return $payment;
+
+    }
+
+
+    public static function verifyStatusPixPaymentPagHiper($transaction_id){
 
         $api_token  = 'GUY0NUU1AA4EBWID21B36INWY14GR9Z84X9SS3U2DZHO';
         $api_key    = 'apk_49587512-BbMWUgPOyyjwePnrDopJtToAMHoEpZCq';
