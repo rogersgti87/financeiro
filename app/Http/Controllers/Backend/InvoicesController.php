@@ -202,6 +202,11 @@ class InvoicesController extends Controller
 
         if($invoice->payment_method == 'Pix'){
           $getInfoPixPayment      = Invoice::verifyStatusPixPayment($verifyTransaction->transaction_id);
+
+          $image = $getInfoPixPayment->point_of_interaction->transaction_data->qr_code_base64;
+          $imageName = $invoice->id.'.'.'png';
+          \File::put(public_path(). '/pix/' . $imageName, base64_decode($image));
+
         }else{
           $getInfoBilletPayment   = Invoice::verifyStatusBilletPayment($verifyTransaction->transaction_id);
         }

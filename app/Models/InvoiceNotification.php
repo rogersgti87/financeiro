@@ -181,9 +181,9 @@ class InvoiceNotification extends Model
                 "PublicToken"   =>  $config->api_brasil_public_token,
                 "DeviceToken"   =>  $config->api_brasil_device_token
             ])->withToken($config->api_brasil_bearer_token)
-            ->post($config->api_brasil_host.'/whatsapp/send-image',[
+            ->post($config->api_brasil_host.'/whatsapp/sendFile64',[
                 "number" => '55'.$data['customer_phone'],
-                "base64"   => $whats_pix_image
+                "path"   => 'data:image/png;base64,'.$whats_pix_image
             ]);
 
             $result = $response->getBody();
