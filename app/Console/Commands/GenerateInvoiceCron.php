@@ -145,8 +145,8 @@ class GenerateInvoiceCron extends Command
             //Storage::disk('pdf_temp')->put($newInvoice.'.pdf', file_get_contents($details['billet_url_slip_pdf']));
             //$details['file_bill_pdf'] = Storage::path('pdf_temp/'.$newInvoice.'.pdf');
         }else{
-            $details['pix_qrcode_image_url']  = $getInfoPixPayment->status_request->pix_code->qrcode_image_url;
-            $details['pix_emv']             = $getInfoPixPayment->status_request->pix_code->emv;
+            $details['pix_qrcode_image_url']  = $getInfoPixPayment->qr_code_base64;
+            $details['pix_emv']               = $getInfoPixPayment->qr_code;
         }
 
 

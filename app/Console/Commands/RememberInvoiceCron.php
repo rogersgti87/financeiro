@@ -76,8 +76,8 @@ class RememberInvoiceCron extends Command
             $details['billet_url_slip_pdf']   = $getInfoBilletPayment->status_request->bank_slip->url_slip_pdf;
             $details['billet_url_slip']       = $getInfoBilletPayment->status_request->bank_slip->url_slip;
         }else{
-            $details['pix_qrcode_image_url']  = $getInfoPixPayment->status_request->pix_code->qrcode_image_url;
-            $details['pix_emv']             = $getInfoPixPayment->status_request->pix_code->emv;
+            $details['pix_qrcode_image_url']  = $getInfoPixPayment->qr_code_base64;
+            $details['pix_emv']               = $getInfoPixPayment->qr_code;
         }
 
         if($invoice->date_end == Carbon::now()->format('Y-m-d') ){

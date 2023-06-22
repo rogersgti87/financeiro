@@ -217,7 +217,6 @@ class InvoiceNotification extends Model
             $data['text_whatsapp_payment'] = '';
 
         if($whats_payment_method == 'Pix'){
-            $data['text_whatsapp_payment'] .= "$whats_pix_image\n\n";
             $data['text_whatsapp_payment'] .= "$whats_pix_emv\n\n";
         }else{
             $whats_billet_digitable_line = removeEspeciais($whats_billet_digitable_line);
