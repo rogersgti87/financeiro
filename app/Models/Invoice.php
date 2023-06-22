@@ -217,7 +217,7 @@ class Invoice extends Model
 
     $payment = \MercadoPago\Payment::find_by_id($transaction_id);
 
-    return $payment;
+    return $payment->point_of_interaction->transaction_data;
 
     }
 
