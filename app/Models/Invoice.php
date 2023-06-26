@@ -123,6 +123,8 @@ class Invoice extends Model
 
        $payment->save();
 
+       \Log::info($payment);
+
        $payment_id = $payment->id ? $payment->id : '';
 
        if($payment_id == ''){
