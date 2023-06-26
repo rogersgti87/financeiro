@@ -109,7 +109,7 @@ class Invoice extends Model
         $payment->payment_method_id = "pix";
         $payment->notification_url = env('APP_URL') . '/webhook/mercadopago?source_news=webhooks';
         $payment->external_reference = $invoice->id;
-        $payment->date_of_expiration = \Carbon\Carbon::now()->addDays(40)->format('Y-m-d\TH:i:s') . '.000-04:00';
+        //$payment->date_of_expiration = \Carbon\Carbon::now()->addDays(40)->format('Y-m-d\TH:i:s') . '.000-04:00';
         $payment->payer = array(
             "email"             => $invoice->email,
             "first_name"        => $invoice->name,
@@ -123,10 +123,10 @@ class Invoice extends Model
 
        $status_payment = $payment->save();
 
-       //$payment_id = $payment->id ? $payment->id : '';
+       $payment_id = $payment->id ? $payment->id : '';
 
-       if($status_payment == false){
-            return ['staus' => 'reject', 'message' => 'Erro ao Gerar Pix'];
+       if($payment_id == ''){
+            return ['status' => 'reject', 'message' => 'Erro ao Gerar Pix'];
         }else{
             return ['status' => 'ok', 'transaction_id' => $payment->id];
         }
