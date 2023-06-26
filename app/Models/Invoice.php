@@ -100,7 +100,7 @@ class Invoice extends Model
         ->where('i.id',$invoice_id)
         ->first();
 
-        $customer_type = count($invoice->document) > 11 ? "CNPJ" : "CPF";
+        $customer_type = strlen($invoice->document) > 11 ? "CNPJ" : "CPF";
 
         \MercadoPago\SDK::setAccessToken('APP_USR-6577696952434644-080712-6d90a29d25117994829ffa1c31f661fe-74837694');
 
