@@ -125,11 +125,13 @@ class Invoice extends Model
 
        $payment_id = $payment->id ? $payment->id : '';
 
-       if($payment_id == ''){
-            return ['status' => 'reject', 'message' => 'Erro ao Gerar Pix'];
-        }else{
-            return ['status' => 'ok', 'transaction_id' => $payment_id];
-        }
+       \Log::info($payment_id);
+
+    //    if($payment_id == ''){
+    //         return ['status' => 'reject', 'message' => 'Erro ao Gerar Pix'];
+    //     }else{
+    //         return ['status' => 'ok', 'transaction_id' => $payment_id];
+    //     }
 
 
       }
