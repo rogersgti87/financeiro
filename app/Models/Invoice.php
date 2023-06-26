@@ -121,11 +121,11 @@ class Invoice extends Model
             "address"           =>  array()
         );
 
-       $payment->save();
+       $status_payment = $payment->save();
 
        //$payment_id = $payment->id ? $payment->id : '';
 
-       if($payment->save() == false){
+       if($status_payment == false){
             return ['staus' => 'reject', 'message' => 'Erro ao Gerar Pix'];
         }else{
             return ['status' => 'ok', 'transaction_id' => $payment->id];
