@@ -127,7 +127,7 @@ class CustomerController extends Controller
 
         $model->name            = $result['name'];
         $model->company         = $result['company'];
-        $model->document        = $result['document'];
+        $model->document        = str_replace([',', '.', ' ', '-','/'], '', $result['document']);
         $model->email           = $result['email'];
         $model->email2          = $result['email2'];
         $model->status          = $result['status'];
@@ -307,7 +307,7 @@ class CustomerController extends Controller
         }
 
         $model->name            = $result['name'];
-        $model->document        = $result['document'];
+        $model->document        = str_replace([',', '.', ' ', '-','/'], '', $result['document']);
         $model->company         = $result['company'];
         $model->email           = $result['email'];
         $model->email2          = $result['email2'];

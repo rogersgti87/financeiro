@@ -115,7 +115,7 @@ class Invoice extends Model
             "first_name"        => $invoice->name,
             "last_name"         => "",
             "identification"    => array(
-                "type"          => "CNPJ",
+                "type"          => count($invoice->document) > 11 ? "CNPJ" : "CPF",
                 "number"        => str_replace([',', '.', ' ', '-','/'], '', $invoice->document)
             ),
             "address"           =>  array()
