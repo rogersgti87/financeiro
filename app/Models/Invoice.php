@@ -121,17 +121,16 @@ class Invoice extends Model
             "address"           =>  array()
         );
 
-       $payment->save();
-
+       $status_payment = $payment->save();
+        \Log::info(json_encode($status_payment));
+       exit;
        $payment_id = $payment->id ? $payment->id : '';
 
-       \Log::info($payment_id);
-
-    //    if($payment_id == ''){
-    //         return ['status' => 'reject', 'message' => 'Erro ao Gerar Pix'];
-    //     }else{
-    //         return ['status' => 'ok', 'transaction_id' => $payment_id];
-    //     }
+       if($payment_id == ''){
+            return ['status' => 'reject', 'message' => 'Erro ao Gerar Pix'];
+        }else{
+            return ['status' => 'ok', 'transaction_id' => $payment_id];
+        }
 
 
       }
