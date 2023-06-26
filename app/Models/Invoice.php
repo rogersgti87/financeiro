@@ -111,7 +111,7 @@ class Invoice extends Model
         $payment->external_reference = $invoice->id;
         $payment->date_of_expiration = \Carbon\Carbon::now()->addDays(40)->format('Y-m-d\TH:i:s') . '.000-04:00';
         $payment->payer = array(
-            //"email"             => $invoice->email,
+            "email"             => 'rsgti87@outlook.com',
             "first_name"        => $invoice->name,
             "last_name"         => "",
             "identification"    => array(
