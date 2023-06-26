@@ -70,7 +70,6 @@ class GenerateInvoiceCron extends Command
         if($invoice->payment_method == 'Pix'){
             $generatePixInvoice = Invoice::generatePixPayment($newInvoice);
 
-            \Log::info(json_encode($generatePixInvoice));
             if($generatePixInvoice['status'] == 'reject'){
                 return response()->json($generatePixInvoice['message'], 422);
             }
