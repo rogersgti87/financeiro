@@ -131,11 +131,6 @@ class Invoice extends Model
             return ['status' => 'ok', 'transaction_id' => $payment->id];
         }
 
-       //$getPayment = \MercadoPago\Payment::find_by_id($payment_id);
-
-       //$urlImage = '<img src="data:image/jpeg;base64,'.$getPayment->point_of_interaction->transaction_data->qr_code_base64.'" alt="QR Code" style="max-width:220px;">';
-
-       //return $urlImage;
 
       }
 
