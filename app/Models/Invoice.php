@@ -123,7 +123,7 @@ class Invoice extends Model
 
        $payment->save();
 
-       \Log::info($payment);
+       \Log::info(json_encode($payment));
 
        $payment_id = $payment->id ? $payment->id : '';
 
