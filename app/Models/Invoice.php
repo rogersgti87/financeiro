@@ -100,6 +100,8 @@ class Invoice extends Model
         ->where('i.id',$invoice_id)
         ->first();
 
+        $customer_type = count($invoice->document) > 11 ? "CNPJ" : "CPF";
+
         \MercadoPago\SDK::setAccessToken('APP_USR-6577696952434644-080712-6d90a29d25117994829ffa1c31f661fe-74837694');
 
         $payment = new \MercadoPago\Payment();
@@ -115,7 +117,7 @@ class Invoice extends Model
             "first_name"        => $invoice->name,
             "last_name"         => "",
             "identification"    => array(
-                "type"          => count($invoice->document) > 11 ? "CNPJ" : "CPF",
+                "type"          => $customer_type,
                 "number"        => str_replace([',', '.', ' ', '-','/'], '', $invoice->document)
             ),
             "address"           =>  array()
