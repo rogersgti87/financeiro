@@ -108,10 +108,10 @@ class Invoice extends Model
         $payment->description = $invoice->service_name;
         $payment->payment_method_id = "pix";
         $payment->notification_url = env('APP_URL') . '/webhook/mercadopago?source_news=webhooks';
-        $payment->external_reference = $invoice->id;
+        $payment->external_reference = $invoice->id.'-'.date('ymdhis');
         $payment->date_of_expiration = \Carbon\Carbon::now()->addDays(40)->format('Y-m-d\TH:i:s') . '.000-04:00';
         $payment->payer = array(
-            "email"             => 'rsgti87@outlook.com',
+            "email"             => $invoice->email,
             "first_name"        => $invoice->name,
             "last_name"         => "",
             "identification"    => array(
