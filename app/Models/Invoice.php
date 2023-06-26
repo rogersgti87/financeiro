@@ -128,7 +128,7 @@ class Invoice extends Model
        if($payment_id == ''){
             return ['status' => 'reject', 'message' => 'Erro ao Gerar Pix'];
         }else{
-            return ['status' => 'ok', 'transaction_id' => $payment->id];
+            return ['status' => 'ok', 'transaction_id' => $payment_id];
         }
 
 
