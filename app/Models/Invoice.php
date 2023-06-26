@@ -121,7 +121,7 @@ class Invoice extends Model
             "address"           =>  array()
         );
 
-       $status_payment = $payment->save();
+       $payment->save();
 
        $payment_id = $payment->id ? $payment->id : '';
 
