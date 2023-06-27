@@ -132,7 +132,7 @@ table.dataTable td {
                         <div class="popup" id="popup-{{$notification->id}}">
                             <div class="overflow">
                                     {{-- {!! str_replace("\n","<br>",json_decode($notification->message)->body) !!} --}}
-                                    {!! json_decode($notification->message)->body !!}
+                                    {!! json_decode($notification->message) !!}
                             <br>
                             <br>
                             </div>
