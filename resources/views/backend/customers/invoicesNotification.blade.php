@@ -129,6 +129,7 @@ table.dataTable td {
                     </td>
                     <td>{{ $notification->message_status}}</td>
                     <td>@if($notification->type_send == 'whatsapp')
+                        @dd(json_decode($notification->message))
                         <div class="popup" id="popup-{{$notification->id}}">
                             <div class="overflow">
                                     {{-- {!! str_replace("\n","<br>",json_decode($notification->message)->body) !!} --}}
