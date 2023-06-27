@@ -129,14 +129,10 @@ table.dataTable td {
                     </td>
                     <td>{{ $notification->message_status}}</td>
                     <td>@if($notification->type_send == 'whatsapp')
-                        @dd(json_decode($notification->message)->body)
                         <div class="popup" id="popup-{{$notification->id}}">
                             <div class="overflow">
-                                @if(property_exists(json_decode($notification->message),'body'))
-                                    {!! str_replace("\n","<br>",json_decode($notification->message)->body) !!}
-                                @else
-                                {!! str_replace("\n","<br>",json_decode($notification->message)) !!}
-                                @endif
+                                    {{-- {!! str_replace("\n","<br>",json_decode($notification->message)->body) !!} --}}
+                                    {!! json_decode($notification->message)->body !!}
                             <br>
                             <br>
                             </div>
