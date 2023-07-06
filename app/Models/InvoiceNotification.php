@@ -135,14 +135,11 @@ class InvoiceNotification extends Model
         if($data['notification_whatsapp'] == 's'){
 
         $response = Http::withHeaders([
-            "Content-Type"  => "application/json",
-            "SecretKey"     =>  $config->api_brasil_secret_key,
-            "PublicToken"   =>  $config->api_brasil_public_token,
-            "DeviceToken"   =>  $config->api_brasil_device_token
-        ])->withToken($config->api_brasil_bearer_token)
-        ->post($config->api_brasil_host.'/whatsapp/sendText',[
-            "number" => '55'.$data['customer_phone'],
-            "text"   => $data['text_whatsapp']
+            "Content-Type"  => "application/json"
+        ])->post('https://whatsapp.rogerti.com.br:8000/api/send-message',[
+            "access_token"  => 'FX1UVGhGVs5Ndj1oqhcpsJBNCc4GRe6p',
+            "whatsapp"      => '55'.$data['customer_phone'],
+            "message"       => $data['text_whatsapp']
         ]);
 
         $result = $response->getBody();
@@ -176,14 +173,11 @@ class InvoiceNotification extends Model
         if($whats_payment_method == 'Pix'){
 
             $response = Http::withHeaders([
-                "Content-Type"  => "application/json",
-                "SecretKey"     =>  $config->api_brasil_secret_key,
-                "PublicToken"   =>  $config->api_brasil_public_token,
-                "DeviceToken"   =>  $config->api_brasil_device_token
-            ])->withToken($config->api_brasil_bearer_token)
-            ->post($config->api_brasil_host.'/whatsapp/sendFile64',[
-                "number" => '55'.$data['customer_phone'],
-                "path"   => 'data:image/png;base64,'.$whats_pix_image
+            "Content-Type"  => "application/json"
+        ])->post('https://whatsapp.rogerti.com.br:8000/api/send-message',[
+                "access_token"  => 'FX1UVGhGVs5Ndj1oqhcpsJBNCc4GRe6p',
+                "whatsapp"      => '55'.$data['customer_phone'],
+                "message"       => 'data:image/png;base64,'.$whats_pix_image
             ]);
 
             $result = $response->getBody();
@@ -224,16 +218,13 @@ class InvoiceNotification extends Model
         }
 
 
-            $response = Http::withHeaders([
-                "Content-Type"  => "application/json",
-                "SecretKey"     =>  $config->api_brasil_secret_key,
-                "PublicToken"   =>  $config->api_brasil_public_token,
-                "DeviceToken"   =>  $config->api_brasil_device_token
-            ])->withToken($config->api_brasil_bearer_token)
-            ->post($config->api_brasil_host.'/whatsapp/sendText',[
-                "number" => '55'.$data['customer_phone'],
-                "text"   => $data['text_whatsapp_payment']
-            ]);
+             $response = Http::withHeaders([
+                    "Content-Type"  => "application/json"
+                ])->post('https://whatsapp.rogerti.com.br:8000/api/send-message',[
+                    "access_token"  => 'FX1UVGhGVs5Ndj1oqhcpsJBNCc4GRe6p',
+                    "whatsapp"      => '55'.$data['customer_phone'],
+                    "message"       => $data['text_whatsapp_payment']
+                ]);
 
             $result = $response->getBody();
 
@@ -366,16 +357,14 @@ class InvoiceNotification extends Model
 
 
         if($data['notification_whatsapp'] == 's'){
-            $response = Http::withHeaders([
-                "Content-Type"  => "application/json",
-                "SecretKey"     =>  $config->api_brasil_secret_key,
-                "PublicToken"   =>  $config->api_brasil_public_token,
-                "DeviceToken"   =>  $config->api_brasil_device_token
-            ])->withToken($config->api_brasil_bearer_token)
-            ->post($config->api_brasil_host.'/whatsapp/sendText',[
-                "number" => '55'.$data['customer_phone'],
-                "text"   => $data['text_whatsapp']
-            ]);
+
+           $response = Http::withHeaders([
+            "Content-Type"  => "application/json"
+        ])->post('https://whatsapp.rogerti.com.br:8000/api/send-message',[
+            "access_token"  => 'FX1UVGhGVs5Ndj1oqhcpsJBNCc4GRe6p',
+            "whatsapp"      => '55'.$data['customer_phone'],
+            "message"       => $data['text_whatsapp']
+        ]);
 
             $result = $response->getBody();
 
