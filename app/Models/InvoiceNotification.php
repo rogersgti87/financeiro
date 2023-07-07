@@ -144,12 +144,12 @@ class InvoiceNotification extends Model
 
         $result = $response->getBody();
 
-        $whats_status           = json_decode($result)->error;
-        if($whats_status == false){
-            $whats_message_status   = json_decode($result)->message;
-            $whats_message          = json_encode(json_decode($result)->response);
+        $whats_status           = json_decode($result);
+        if($whats_status->status == 'success'){
+            $whats_message_status   = $whats_status->status;
+            $whats_message          = json_encode($whats_status->response);
         }else{
-            $whats_message_status   = json_encode(json_decode($result)->message);
+            $whats_message_status   = json_encode($whats_status->response);
             $whats_message          = '';
         }
 
@@ -182,14 +182,14 @@ class InvoiceNotification extends Model
 
             $result = $response->getBody();
 
-            $whats_status           = json_decode($result)->error;
-            if($whats_status == false){
-                $whats_message_status   = json_decode($result)->message;
-                $whats_message          = json_encode(json_decode($result)->response);
-            }else{
-                $whats_message_status   = json_encode(json_decode($result)->message);
-                $whats_message          = '';
-            }
+            $whats_status           = json_decode($result);
+        if($whats_status->status == 'success'){
+            $whats_message_status   = $whats_status->status;
+            $whats_message          = json_encode($whats_status->response);
+        }else{
+            $whats_message_status   = json_encode($whats_status->response);
+            $whats_message          = '';
+        }
 
 
             DB::table('invoice_notifications')->insert([
@@ -228,14 +228,14 @@ class InvoiceNotification extends Model
 
             $result = $response->getBody();
 
-            $whats_status           = json_decode($result)->error;
-            if($whats_status == false){
-                $whats_message_status   = json_decode($result)->message;
-                $whats_message          = json_encode(json_decode($result)->response);
-            }else{
-                $whats_message_status   = json_encode(json_decode($result)->message);
-                $whats_message          = '';
-            }
+            $whats_status           = json_decode($result);
+        if($whats_status->status == 'success'){
+            $whats_message_status   = $whats_status->status;
+            $whats_message          = json_encode($whats_status->response);
+        }else{
+            $whats_message_status   = json_encode($whats_status->response);
+            $whats_message          = '';
+        }
 
 
             DB::table('invoice_notifications')->insert([
@@ -368,14 +368,14 @@ class InvoiceNotification extends Model
 
             $result = $response->getBody();
 
-            $whats_status           = json_decode($result)->error;
-            if($whats_status == false){
-                $whats_message_status   = json_decode($result)->message;
-                $whats_message          = json_encode(json_decode($result)->response);
-            }else{
-                $whats_message_status   = json_encode(json_decode($result)->message);
-                $whats_message          = '';
-            }
+            $whats_status           = json_decode($result);
+        if($whats_status->status == 'success'){
+            $whats_message_status   = $whats_status->status;
+            $whats_message          = json_encode($whats_status->response);
+        }else{
+            $whats_message_status   = json_encode($whats_status->response);
+            $whats_message          = '';
+        }
 
             DB::table('invoice_notifications')->insert([
                 'invoice_id'        => $data['invoice_id'],
