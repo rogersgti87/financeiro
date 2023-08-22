@@ -32,9 +32,9 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
 
-        $schedule->command('generateinvoice:cron')->dailyAt('9:20');
+        $schedule->command('generateinvoice:cron')->twiceDaily(9, 13);
         //$schedule->command('generateinvoicestatus:cron')->everyMinute();
-        $schedule->command('rememberinvoice:cron')->dailyAt('9:20');
+        $schedule->command('rememberinvoice:cron')->dailyAt('8:40');
         //$schedule->command('backupsql:cron')->everyFiveMinutes();
         //$schedule->command('backupfile:cron')->twiceMonthly(1, 16, '3:00');
         //$schedule->command('removebackupsql:cron')->dailyAt('1:00');
