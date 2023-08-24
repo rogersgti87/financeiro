@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        commands\GenerateInvoiceCron::class,
+        //commands\GenerateInvoiceCron::class,
         //commands\VerifyInvoiceStatusCron::class,
         commands\RememberInvoiceCron::class,
         //commands\BackupSQLCron::class,
@@ -32,7 +32,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
 
-        $schedule->command('generateinvoice:cron')->twiceDaily(9, 13);
+        //$schedule->command('generateinvoice:cron')->twiceDaily(9, 13);
         //$schedule->command('generateinvoicestatus:cron')->everyMinute();
         $schedule->command('rememberinvoice:cron')->dailyAt('8:40');
         //$schedule->command('backupsql:cron')->everyFiveMinutes();
