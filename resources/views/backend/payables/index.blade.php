@@ -258,7 +258,7 @@
                         },
                         onClose: () => {
                             // Loading page listagem
-                            location.href = "{{ request()->query())->links() }}";
+                            location.reload();
                         }
                     });
                 },
