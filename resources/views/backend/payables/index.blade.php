@@ -258,7 +258,7 @@
                         },
                         onClose: () => {
                             // Loading page listagem
-                            location.href = "{{ url($url_action) }}";
+                            location.href = "{{ request()->query())->links() }}";
                         }
                     });
                 },
